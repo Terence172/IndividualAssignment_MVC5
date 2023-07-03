@@ -1,0 +1,699 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="db_individualTestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="comem">
+          <Key>
+            <PropertyRef Name="comem_id" />
+          </Key>
+          <Property Name="comem_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="prog_id" Type="int" Nullable="false" />
+          <Property Name="lect_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="comment">
+          <Key>
+            <PropertyRef Name="cmt_id" />
+          </Key>
+          <Property Name="cmt_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="lect_id" Type="int" />
+          <Property Name="stud_id" Type="int" />
+          <Property Name="cmt_title" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="cmt_content" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="prop_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="lecturer">
+          <Key>
+            <PropertyRef Name="lect_id" />
+          </Key>
+          <Property Name="lect_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="lect_faculty" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="lect_domain" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="programme">
+          <Key>
+            <PropertyRef Name="prog_id" />
+          </Key>
+          <Property Name="prog_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="prog_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="prog_code" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="proposal">
+          <Key>
+            <PropertyRef Name="prop_id" />
+          </Key>
+          <Property Name="prop_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="prop_title" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="prop_type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="prop_file" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="prop_status" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="stu_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="student">
+          <Key>
+            <PropertyRef Name="stu_id" />
+          </Key>
+          <Property Name="stu_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="stu_faculty" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="stu_school" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="prog_id" Type="int" Nullable="false" />
+          <Property Name="stu_sup_ID" Type="int" />
+          <Property Name="stu_pref_sup_ID" Type="int" />
+          <Property Name="stu_status_done_sup" Type="int" Nullable="false" />
+          <Property Name="stu_sup_agreement" Type="varchar" MaxLength="200" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="stu_evaluator1" Type="int" />
+          <Property Name="stu_evaluator2" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_fullname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="user_password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="user_type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="u_forgotpwdCode" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_comem_lecturer">
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="1" />
+          <End Role="comem" Type="Self.comem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecturer">
+              <PropertyRef Name="lect_id" />
+            </Principal>
+            <Dependent Role="comem">
+              <PropertyRef Name="lect_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comem_programme">
+          <End Role="programme" Type="Self.programme" Multiplicity="1" />
+          <End Role="comem" Type="Self.comem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="programme">
+              <PropertyRef Name="prog_id" />
+            </Principal>
+            <Dependent Role="comem">
+              <PropertyRef Name="prog_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comment_proposal">
+          <End Role="proposal" Type="Self.proposal" Multiplicity="1" />
+          <End Role="comment" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proposal">
+              <PropertyRef Name="prop_id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="prop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_lecturer_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="lecturer">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proposal_student">
+          <End Role="student" Type="Self.student" Multiplicity="1" />
+          <End Role="proposal" Type="Self.proposal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="stu_id" />
+            </Principal>
+            <Dependent Role="proposal">
+              <PropertyRef Name="stu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_student_lecturer">
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="0..1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecturer">
+              <PropertyRef Name="lect_id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="stu_evaluator1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_student_lecturer1">
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="0..1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecturer">
+              <PropertyRef Name="lect_id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="stu_evaluator2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_student_lecturer2">
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="0..1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecturer">
+              <PropertyRef Name="lect_id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="stu_sup_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_student_lecturer3">
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="0..1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecturer">
+              <PropertyRef Name="lect_id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="stu_pref_sup_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_student_programme">
+          <End Role="programme" Type="Self.programme" Multiplicity="1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="programme">
+              <PropertyRef Name="prog_id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="prog_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_student_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_individualTestModelStoreContainer">
+          <EntitySet Name="comem" EntityType="Self.comem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="comment" EntityType="Self.comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="lecturer" EntityType="Self.lecturer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="programme" EntityType="Self.programme" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="proposal" EntityType="Self.proposal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="student" EntityType="Self.student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_comem_lecturer" Association="Self.FK_comem_lecturer">
+            <End Role="lecturer" EntitySet="lecturer" />
+            <End Role="comem" EntitySet="comem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comem_programme" Association="Self.FK_comem_programme">
+            <End Role="programme" EntitySet="programme" />
+            <End Role="comem" EntitySet="comem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comment_proposal" Association="Self.FK_comment_proposal">
+            <End Role="proposal" EntitySet="proposal" />
+            <End Role="comment" EntitySet="comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_lecturer_user" Association="Self.FK_lecturer_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="lecturer" EntitySet="lecturer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proposal_student" Association="Self.FK_proposal_student">
+            <End Role="student" EntitySet="student" />
+            <End Role="proposal" EntitySet="proposal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_student_lecturer" Association="Self.FK_student_lecturer">
+            <End Role="lecturer" EntitySet="lecturer" />
+            <End Role="student" EntitySet="student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_student_lecturer1" Association="Self.FK_student_lecturer1">
+            <End Role="lecturer" EntitySet="lecturer" />
+            <End Role="student" EntitySet="student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_student_lecturer2" Association="Self.FK_student_lecturer2">
+            <End Role="lecturer" EntitySet="lecturer" />
+            <End Role="student" EntitySet="student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_student_lecturer3" Association="Self.FK_student_lecturer3">
+            <End Role="lecturer" EntitySet="lecturer" />
+            <End Role="student" EntitySet="student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_student_programme" Association="Self.FK_student_programme">
+            <End Role="programme" EntitySet="programme" />
+            <End Role="student" EntitySet="student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_student_user" Association="Self.FK_student_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="student" EntitySet="student" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_individualTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="comem">
+          <Key>
+            <PropertyRef Name="comem_id" />
+          </Key>
+          <Property Name="comem_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prog_id" Type="Int32" Nullable="false" />
+          <Property Name="lect_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="lecturer" Relationship="Self.FK_comem_lecturer" FromRole="comem" ToRole="lecturer" />
+          <NavigationProperty Name="programme" Relationship="Self.FK_comem_programme" FromRole="comem" ToRole="programme" />
+        </EntityType>
+        <EntityType Name="comment">
+          <Key>
+            <PropertyRef Name="cmt_id" />
+          </Key>
+          <Property Name="cmt_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="lect_id" Type="Int32" />
+          <Property Name="stud_id" Type="Int32" />
+          <Property Name="cmt_title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cmt_content" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prop_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="proposal" Relationship="Self.FK_comment_proposal" FromRole="comment" ToRole="proposal" />
+        </EntityType>
+        <EntityType Name="lecturer">
+          <Key>
+            <PropertyRef Name="lect_id" />
+          </Key>
+          <Property Name="lect_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="lect_faculty" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lect_domain" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="comems" Relationship="Self.FK_comem_lecturer" FromRole="lecturer" ToRole="comem" />
+          <NavigationProperty Name="user" Relationship="Self.FK_lecturer_user" FromRole="lecturer" ToRole="user" />
+          <NavigationProperty Name="students" Relationship="Self.FK_student_lecturer" FromRole="lecturer" ToRole="student" />
+          <NavigationProperty Name="students1" Relationship="Self.FK_student_lecturer1" FromRole="lecturer" ToRole="student" />
+          <NavigationProperty Name="students2" Relationship="Self.FK_student_lecturer2" FromRole="lecturer" ToRole="student" />
+          <NavigationProperty Name="students3" Relationship="Self.FK_student_lecturer3" FromRole="lecturer" ToRole="student" />
+        </EntityType>
+        <EntityType Name="programme">
+          <Key>
+            <PropertyRef Name="prog_id" />
+          </Key>
+          <Property Name="prog_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prog_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prog_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="comems" Relationship="Self.FK_comem_programme" FromRole="programme" ToRole="comem" />
+          <NavigationProperty Name="students" Relationship="Self.FK_student_programme" FromRole="programme" ToRole="student" />
+        </EntityType>
+        <EntityType Name="proposal">
+          <Key>
+            <PropertyRef Name="prop_id" />
+          </Key>
+          <Property Name="prop_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prop_title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prop_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prop_file" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prop_status" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="stu_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="comments" Relationship="Self.FK_comment_proposal" FromRole="proposal" ToRole="comment" />
+          <NavigationProperty Name="student" Relationship="Self.FK_proposal_student" FromRole="proposal" ToRole="student" />
+        </EntityType>
+        <EntityType Name="student">
+          <Key>
+            <PropertyRef Name="stu_id" />
+          </Key>
+          <Property Name="stu_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="stu_faculty" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="stu_school" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prog_id" Type="Int32" Nullable="false" />
+          <Property Name="stu_sup_ID" Type="Int32" />
+          <Property Name="stu_pref_sup_ID" Type="Int32" />
+          <Property Name="stu_status_done_sup" Type="Int32" Nullable="false" />
+          <Property Name="stu_sup_agreement" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="stu_evaluator1" Type="Int32" />
+          <Property Name="stu_evaluator2" Type="Int32" />
+          <NavigationProperty Name="lecturer" Relationship="Self.FK_student_lecturer" FromRole="student" ToRole="lecturer" />
+          <NavigationProperty Name="lecturer1" Relationship="Self.FK_student_lecturer1" FromRole="student" ToRole="lecturer" />
+          <NavigationProperty Name="lecturer2" Relationship="Self.FK_student_lecturer2" FromRole="student" ToRole="lecturer" />
+          <NavigationProperty Name="lecturer3" Relationship="Self.FK_student_lecturer3" FromRole="student" ToRole="lecturer" />
+          <NavigationProperty Name="programme" Relationship="Self.FK_student_programme" FromRole="student" ToRole="programme" />
+          <NavigationProperty Name="proposals" Relationship="Self.FK_proposal_student" FromRole="student" ToRole="proposal" />
+          <NavigationProperty Name="user" Relationship="Self.FK_student_user" FromRole="student" ToRole="user" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="u_forgotpwdCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="lecturers" Relationship="Self.FK_lecturer_user" FromRole="user" ToRole="lecturer" />
+          <NavigationProperty Name="students" Relationship="Self.FK_student_user" FromRole="user" ToRole="student" />
+        </EntityType>
+        <Association Name="FK_comem_lecturer">
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="1" />
+          <End Role="comem" Type="Self.comem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecturer">
+              <PropertyRef Name="lect_id" />
+            </Principal>
+            <Dependent Role="comem">
+              <PropertyRef Name="lect_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comem_programme">
+          <End Role="programme" Type="Self.programme" Multiplicity="1" />
+          <End Role="comem" Type="Self.comem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="programme">
+              <PropertyRef Name="prog_id" />
+            </Principal>
+            <Dependent Role="comem">
+              <PropertyRef Name="prog_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comment_proposal">
+          <End Role="proposal" Type="Self.proposal" Multiplicity="1" />
+          <End Role="comment" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proposal">
+              <PropertyRef Name="prop_id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="prop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_lecturer_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="lecturer">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_student_lecturer">
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="0..1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecturer">
+              <PropertyRef Name="lect_id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="stu_evaluator1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_student_lecturer1">
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="0..1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecturer">
+              <PropertyRef Name="lect_id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="stu_evaluator2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_student_lecturer2">
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="0..1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecturer">
+              <PropertyRef Name="lect_id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="stu_sup_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_student_lecturer3">
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="0..1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecturer">
+              <PropertyRef Name="lect_id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="stu_pref_sup_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_student_programme">
+          <End Role="programme" Type="Self.programme" Multiplicity="1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="programme">
+              <PropertyRef Name="prog_id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="prog_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proposal_student">
+          <End Role="student" Type="Self.student" Multiplicity="1" />
+          <End Role="proposal" Type="Self.proposal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="stu_id" />
+            </Principal>
+            <Dependent Role="proposal">
+              <PropertyRef Name="stu_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_student_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_individualTestEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="comems" EntityType="Self.comem" />
+          <EntitySet Name="comments" EntityType="Self.comment" />
+          <EntitySet Name="lecturers" EntityType="Self.lecturer" />
+          <EntitySet Name="programmes" EntityType="Self.programme" />
+          <EntitySet Name="proposals" EntityType="Self.proposal" />
+          <EntitySet Name="students" EntityType="Self.student" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="FK_comem_lecturer" Association="Self.FK_comem_lecturer">
+            <End Role="lecturer" EntitySet="lecturers" />
+            <End Role="comem" EntitySet="comems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comem_programme" Association="Self.FK_comem_programme">
+            <End Role="programme" EntitySet="programmes" />
+            <End Role="comem" EntitySet="comems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comment_proposal" Association="Self.FK_comment_proposal">
+            <End Role="proposal" EntitySet="proposals" />
+            <End Role="comment" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_lecturer_user" Association="Self.FK_lecturer_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="lecturer" EntitySet="lecturers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_student_lecturer" Association="Self.FK_student_lecturer">
+            <End Role="lecturer" EntitySet="lecturers" />
+            <End Role="student" EntitySet="students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_student_lecturer1" Association="Self.FK_student_lecturer1">
+            <End Role="lecturer" EntitySet="lecturers" />
+            <End Role="student" EntitySet="students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_student_lecturer2" Association="Self.FK_student_lecturer2">
+            <End Role="lecturer" EntitySet="lecturers" />
+            <End Role="student" EntitySet="students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_student_lecturer3" Association="Self.FK_student_lecturer3">
+            <End Role="lecturer" EntitySet="lecturers" />
+            <End Role="student" EntitySet="students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_student_programme" Association="Self.FK_student_programme">
+            <End Role="programme" EntitySet="programmes" />
+            <End Role="student" EntitySet="students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proposal_student" Association="Self.FK_proposal_student">
+            <End Role="student" EntitySet="students" />
+            <End Role="proposal" EntitySet="proposals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_student_user" Association="Self.FK_student_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="student" EntitySet="students" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="db_individualTestModelStoreContainer" CdmEntityContainer="db_individualTestEntities">
+          <EntitySetMapping Name="comems">
+            <EntityTypeMapping TypeName="db_individualTestModel.comem">
+              <MappingFragment StoreEntitySet="comem">
+                <ScalarProperty Name="comem_id" ColumnName="comem_id" />
+                <ScalarProperty Name="prog_id" ColumnName="prog_id" />
+                <ScalarProperty Name="lect_id" ColumnName="lect_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="comments">
+            <EntityTypeMapping TypeName="db_individualTestModel.comment">
+              <MappingFragment StoreEntitySet="comment">
+                <ScalarProperty Name="cmt_id" ColumnName="cmt_id" />
+                <ScalarProperty Name="lect_id" ColumnName="lect_id" />
+                <ScalarProperty Name="stud_id" ColumnName="stud_id" />
+                <ScalarProperty Name="cmt_title" ColumnName="cmt_title" />
+                <ScalarProperty Name="cmt_content" ColumnName="cmt_content" />
+                <ScalarProperty Name="prop_id" ColumnName="prop_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lecturers">
+            <EntityTypeMapping TypeName="db_individualTestModel.lecturer">
+              <MappingFragment StoreEntitySet="lecturer">
+                <ScalarProperty Name="lect_id" ColumnName="lect_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="lect_faculty" ColumnName="lect_faculty" />
+                <ScalarProperty Name="lect_domain" ColumnName="lect_domain" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="programmes">
+            <EntityTypeMapping TypeName="db_individualTestModel.programme">
+              <MappingFragment StoreEntitySet="programme">
+                <ScalarProperty Name="prog_id" ColumnName="prog_id" />
+                <ScalarProperty Name="prog_name" ColumnName="prog_name" />
+                <ScalarProperty Name="prog_code" ColumnName="prog_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="proposals">
+            <EntityTypeMapping TypeName="db_individualTestModel.proposal">
+              <MappingFragment StoreEntitySet="proposal">
+                <ScalarProperty Name="prop_id" ColumnName="prop_id" />
+                <ScalarProperty Name="prop_title" ColumnName="prop_title" />
+                <ScalarProperty Name="prop_type" ColumnName="prop_type" />
+                <ScalarProperty Name="prop_file" ColumnName="prop_file" />
+                <ScalarProperty Name="prop_status" ColumnName="prop_status" />
+                <ScalarProperty Name="stu_id" ColumnName="stu_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="students">
+            <EntityTypeMapping TypeName="db_individualTestModel.student">
+              <MappingFragment StoreEntitySet="student">
+                <ScalarProperty Name="stu_id" ColumnName="stu_id" />
+                <ScalarProperty Name="stu_faculty" ColumnName="stu_faculty" />
+                <ScalarProperty Name="stu_school" ColumnName="stu_school" />
+                <ScalarProperty Name="prog_id" ColumnName="prog_id" />
+                <ScalarProperty Name="stu_sup_ID" ColumnName="stu_sup_ID" />
+                <ScalarProperty Name="stu_pref_sup_ID" ColumnName="stu_pref_sup_ID" />
+                <ScalarProperty Name="stu_status_done_sup" ColumnName="stu_status_done_sup" />
+                <ScalarProperty Name="stu_sup_agreement" ColumnName="stu_sup_agreement" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="stu_evaluator1" ColumnName="stu_evaluator1" />
+                <ScalarProperty Name="stu_evaluator2" ColumnName="stu_evaluator2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="db_individualTestModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="db_individualTestModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="user_fullname" ColumnName="user_fullname" />
+                <ScalarProperty Name="user_email" ColumnName="user_email" />
+                <ScalarProperty Name="user_password" ColumnName="user_password" />
+                <ScalarProperty Name="user_type" ColumnName="user_type" />
+                <ScalarProperty Name="u_forgotpwdCode" ColumnName="u_forgotpwdCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
