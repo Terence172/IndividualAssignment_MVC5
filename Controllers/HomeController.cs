@@ -30,9 +30,9 @@ namespace IndividualAssignment_MVC5.Controllers
                 return RedirectToAction("DashboardLecturer", "Home");
             }
 
-            if (Session["UserType"].ToString() == "Admin")
+            if (Session["UserType"].ToString() == "Student")
             {
-                return RedirectToAction("DashboardAdmin", "Home");
+                return RedirectToAction("DashboardStudent", "Home");
             }
 
 

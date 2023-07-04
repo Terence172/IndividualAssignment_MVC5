@@ -1,0 +1,82 @@
+﻿@model IndividualAssignment_MVC5.Models.user
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Home/LayoutDashboard.cshtml";
+}
+
+<div class="page-header">
+    <div class="row">
+
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Lecturer - View</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("DashboardAdmin", "Home")">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "lecturer")">Lecturer List</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        View Lecturer - <span>@Html.DisplayFor(model => model.user_firstname) @Html.DisplayFor(model => model.user_lastname)</span>
+
+                    </li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="col-md-6 col-sm-12 text-right">
+            <div class="dropdown">
+                <a class="btn btn-primary" href="@Url.Action("Create", "lecturer")" role="button">
+                    Create Lecturer
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- basic table  Start -->
+<div class="pd-20 card-box mb-30">
+
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h4 class="text-blue h4">Lecturer Credentials</h4>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Variable</th>
+                <th scope="col">Content</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Lecturer Username</th>
+                <td>@Html.DisplayFor(model => model.user_name)</td>
+            </tr>
+            <tr>
+                <th scope="row">Lecturer Email</th>
+                <td>@Html.DisplayFor(model => model.user_email)</td>
+            </tr>
+            <tr>
+                <th scope="row">Lecturer Name</th>
+                <td>@Html.DisplayFor(model => model.user_firstname) @Html.DisplayFor(model => model.user_lastname)</td>
+            </tr>
+            <tr>
+                <th scope="row">Lecturer Faculty</th>
+                <td>@Html.DisplayFor(model => model.lecturers.First().lect_faculty)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="card card-box text-center">
+        <div class="card-body">
+            <h5 class="card-title">Actions :</h5>
+            <p class="card-text">Choose Carefully :P</p>
+            @Html.ActionLink("Edit this Lecturer", "Edit", new { id = Model.user_id }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Back to List", "Index", new { id = Model.user_id }, new { @class = "btn btn-primary" })
+        </div>
+    </div>
+
+
+</div>

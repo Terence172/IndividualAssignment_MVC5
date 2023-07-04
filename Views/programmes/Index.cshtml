@@ -1,0 +1,96 @@
+﻿@model IEnumerable<IndividualAssignment_MVC5.Models.programme>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Home/LayoutDashboard.cshtml";
+}
+
+<div class="page-header">
+    <div class="row">
+
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Programme - View</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("DashboardAdmin", "Home")">Home</a></li>
+                    <li class="breadcrumb-item">Manage Programmes</li>
+                    <li class="breadcrumb-item active" aria-current="page">Programmes</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+<div class="pd-20 card-box mb-30">
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h4 class="text-blue h4">Programme</h4>
+            <p>Programmes registered to the <code>.system</code> :P</p>
+        </div>
+        <div class="pull-right">
+            <a href="@Url.Action("Create", "programmes")" class="btn btn-primary btn-sm scroll-click" role="button">
+                <i class="micon icon-copy fa fa-book"></i> Create Programme
+            </a>
+        </div>
+    </div>
+    <div class="pb-20">
+        <table class="data-table table stripe hover nowrap">
+            <thead>
+                <tr>
+                    <th class="table-plus datatable-nosort">Programme Code</th>
+                    <th>Programme Name</th>
+                    <th>Number of students</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+
+
+                    <tr>
+                        <td class="table-plus">
+                            <span>@Html.DisplayFor(modelItem => item.prog_code)</span>
+                        </td>
+
+
+                        <td>@Html.DisplayFor(modelItem => item.prog_name)</td>
+                        <td>
+
+                            @{
+
+                                int studentCount = item.students.Count(s => s.prog_id == item.prog_id);
+                                @studentCount
+                            }
+
+                        </td>
+
+                        <td>
+                            <div class="dropdown">
+                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                    <i class="dw dw-more"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                    <a class="dropdown-item" href="@Url.Action("Details", "programmes", new { id = item.prog_id })">
+                                        <i class="dw dw-eye"></i> View
+                                    </a>
+                                    <a class="dropdown-item" href="@Url.Action("Edit", "programmes", new { id = item.prog_id })">
+                                        <i class="dw dw-edit2"></i> Edit
+                                    </a>
+                                    <a class="dropdown-item" href="@Url.Action("Delete", "programmes", new { id = item.prog_id })">
+                                        <i class="dw dw-delete-3"></i> Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

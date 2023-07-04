@@ -1,148 +1,41 @@
-﻿using IndividualAssignment_MVC5.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Security.Cryptography;
-
-using System;
-using System.IO;
-using System.Security.Cryptography;
-using System.Text;
-
+using IndividualAssignment_MVC5.Models;
 
 namespace IndividualAssignment_MVC5.Controllers
 {
-    public class LoginController : Controller
+    public class EmailController : Controller
     {
-        private db_individualTestEntities db = new db_individualTestEntities();
-        
-        // GET: Login
+        // GET: Email
         public ActionResult Index()
         {
             return View();
         }
 
-        //forgot password
-        public ActionResult ForgotPassword()
-        {
-            return View();
-        }
-
-
+        // POST: Email/SendCredentials
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Index(user objchk)
+        public ActionResult SendCredentials(string userName, string password, string userEmail, string lect_faculty, string user_firstname, string user_lastname)
         {
-            if (ModelState.IsValid)
-            {
+            // Sender's email credentials
+            string senderEmail = "terenceloorthanathan17@gmail.com"; // Replace with your Gmail address
+            string senderPassword = "rzmvuyyascgfmzle"; // Replace with your Gmail password
 
-                string encryptedPassword = Encrypt(objchk.user_password);
-                Console.WriteLine("Encrypted Password: " + encryptedPassword);
-                var obj = db.users.Where(a => a.user_name.Equals(objchk.user_name) && a.user_password.Equals(encryptedPassword)).FirstOrDefault();
+            // Recipient email address
+            string recipientEmail = userEmail; // Replace with the recipient's email address
 
-                if (obj != null)
-                    {
-                        Session["UserID"] = obj.user_id;
-                        Session["UserName"] = obj.user_name.ToString();
-                        Session["UserType"] = obj.user_type.ToString();
+            // Construct the email message
+            System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage(senderEmail, recipientEmail);
 
-                        if (obj.user_type == "Admin")
-                        {
-                            return RedirectToAction("DashboardAdmin", "Home");
-                        }
-
-                        else if (obj.user_type == "Lecturer")
-                        {
-                            return RedirectToAction("DashboardLecturer", "Home");
-                        }
-
-                        else if (obj.user_type == "Student")
-                        {
-                            return RedirectToAction("DashboardStudent", "Home");
-                        }
-                    /* 
-                     Might wanna have more redirect for other user types  c4ca4238a0b923820dcc509a6f75849b
-                     */
-                }
-
-                else
-                    {
-                        ModelState.AddModelError("", "The Username or Password Incorrect");
-                    }
-                
-
-            }
-
-            return View();
-        }
-
-        public static string Encrypt(string plainText)
-        {
-            byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
-            string encryptedPassword = Convert.ToBase64String(plainBytes);
-            return encryptedPassword;
-        }
-
-
-        [HttpPost]
-        public ActionResult ForgotPassword(string user_email)
-        {
-            //Verify Email ID
-            //Generate Reset Password Link
-            //Send email
-
-            string message = "";
-
-
-            var account = db.users.Where(u => u.user_email == user_email).FirstOrDefault();
-
-            if (account != null)
-            {
-                //send email to reset password
-                //generate unique identification number
-                string resetCode = Guid.NewGuid().ToString();
-                SendEmail(account.user_email, resetCode, "ResetPassword");//method
-                account.u_forgotpwdCode = resetCode;
-
-                //avid confirm password not match issue
-                db.Configuration.ValidateOnSaveEnabled = false;
-                db.SaveChanges();
-                message = "Reset password link has been sent to your email address";
-            }
-            else
-            {
-                message = "Account not found";
-            }
-
-            ViewBag.Message = message;
-            return View();
-        }
-
-
-        [NonAction]
-        public void SendEmail(string emailID, string activationCode, string emailFor = "ResetPassword")
-        {
-            var verifyUrl = "/Login/" + emailFor + "/" + activationCode;
-            var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
-
-            var fromEmail = new MailAddress("akmalrentalsalphazero@gmail.com", "Akmal Rentals");
-            var toEmail = new MailAddress(emailID);
-            var fromEmailPassword = "otubezrpgcnrvxnl"; // Replace with actual password
-
-            string subject = "";
-            string body = "";
-
-            string logoImageUrl = "https://i.imgur.com/j3xnJzi.png";
+            string logoImageUrl = "https://i.imgur.com/0oUkVR9.png";
             string backgroundImageUrl = "https://i.imgur.com/4Q9bX9h.png";
 
-            if (emailFor == "ResetPassword")
-            {
-                subject = "Reset Password";
-                body = $@"
+            mail.Subject = "Welcome to FYP1 System";
+            mail.Body = $@"
                     
             <html lang='en' xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:v='urn:schemas-microsoft-com:vml'>
                         <head>
@@ -240,12 +133,12 @@ namespace IndividualAssignment_MVC5.Controllers
                                                                                 <tbody>
                                                                                     <tr>
                                                                                         <td style='padding: 20px; text-align: center;'>
-                                                                                            <h3 style='text-align: center;'>Hello, We received a request to change your password</h3>
-                                                                                            <p style='text-align: center;'>Click on the link below, to continue to reset your password</p>
-                                                                                            
-                                                                                            <p style='text-align: center;'>Link: {link}</p>
-                                                                                            <br>
-                                                                                            <p style='text-align: center;'>Follow us: https://www.facebook.com/AkmalBilikSewa</p>
+                                                                                            <h3 style='text-align: center;'>Hello, {user_firstname} {user_lastname}! from {lect_faculty}</h3>
+                                                                                            <p style='text-align: center;'>Welcome to FYP1 System</p>
+                                                                                            <p style='text-align: center;'>Your Credentials to Login into the System are as follows:</p>
+                                                                                            <p style='text-align: center;'>Username: {userName}</p>
+                                                                                            <p style='text-align: center;'>Password: {password}</p>
+                                                                                            <p style='text-align: center;'>Link: https://localhost:44304/</p>
 
                                                                                         </td>
                                                                                     </tr>
@@ -296,96 +189,33 @@ namespace IndividualAssignment_MVC5.Controllers
                             </table>
                         </body>
                     </html>";
+
+
+            mail.IsBodyHtml = true;
+
+            //$"Your username: {userName}\nYour password: {password}" +
+            //$"";
+
+
+            // Configure the SMTP client
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+            smtpClient.EnableSsl = true;
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.Credentials = new NetworkCredential(senderEmail, senderPassword);
+
+            try
+            {
+                smtpClient.Send(mail); // Send the email
+                ViewBag.Message = "Email sent successfully";
+            }
+            catch (SmtpException ex)
+            {
+                // Handle any errors that occur during email sending
+                ViewBag.Message = $"Error sending email: {ex.Message}";
             }
 
-
-            var smtp = new SmtpClient
-            {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = true,
-                Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
-            };
-
-            using (var message = new MailMessage(fromEmail, toEmail)
-            {
-                Subject = subject,
-                Body = body,
-                IsBodyHtml = true
-            })
-                smtp.Send(message);
+            return RedirectToAction("Index", "lecturer"); // Redirect to the desired action after sending the email
         }
-
-
-
-        public ActionResult ResetPassword(string id)
-        {
-            //verify the reset password link
-            //find account associated with this link
-            //redirect user to reset password page
-
-
-            var user = db.users.Where(u => u.u_forgotpwdCode == id).FirstOrDefault();
-            if (user != null)
-            {
-                ResetPasswordModel model = new ResetPasswordModel();
-                model.ResetCode = id;
-                return View(model);
-            }
-            else
-            {
-                return HttpNotFound();
-            }
-
-
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult ResetPassword(ResetPasswordModel model)
-        {
-            if (ModelState.IsValid)
-            {
-
-                var user = db.users.Where(u => u.u_forgotpwdCode == model.ResetCode).FirstOrDefault();
-                if (user != null)
-                {
-                    var tempPass = model.NewPassword;
-
-                    //hash
-                    user.user_password = Encrypt(tempPass);
-
-                    //user can update one time with each user password code
-                    user.u_forgotpwdCode = "";
-                    //avoid confirm password not match issue
-                    db.Configuration.ValidateOnSaveEnabled = false;
-                    db.SaveChanges();
-                    TempData["success"] = "New password updated successfully";
-                }
-                else
-                {
-                    return HttpNotFound();
-                }
-
-            }
-            else
-            {
-                TempData["fail"] = "Something invalid";
-            }
-            return View(model);
-        }
-
-
-
-        public ActionResult Logout()
-        {
-            Session.Clear();
-            return RedirectToAction("Index", "Home");
-        }
-
 
     }
 }

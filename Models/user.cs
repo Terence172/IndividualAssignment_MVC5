@@ -23,11 +23,12 @@ namespace IndividualAssignment_MVC5.Models
     
         public int user_id { get; set; }
         public string user_name { get; set; }
-        public string user_fullname { get; set; }
         public string user_email { get; set; }
         public string user_password { get; set; }
         public string user_type { get; set; }
         public string u_forgotpwdCode { get; set; }
+        public string user_firstname { get; set; }
+        public string user_lastname { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<lecturer> lecturers { get; set; }

@@ -10,7 +10,7 @@ namespace IndividualAssignment_MVC5.Models
     public class ResetPasswordModel
     {
         [Required(ErrorMessage = "New password required", AllowEmptyStrings = false)]
-        [StringLength(100, MinimumLength = 6, ErrorMessage = "Password must have 6 characters")]
+        [StringLength(100, MinimumLength = 1, ErrorMessage = "Password must have 1 characters")]
         [Display(Name = "New Password")]
         [DataType(DataType.Password)]
         public string NewPassword { get; set; }
@@ -18,7 +18,7 @@ namespace IndividualAssignment_MVC5.Models
         [DataType(DataType.Password)]
         [Compare("NewPassword", ErrorMessage = "New and confirm password does not match")]
         [Required(ErrorMessage = "Confirm Password required")]
-        [StringLength(100, MinimumLength = 6, ErrorMessage = "Password must have 6 characters")]
+        [StringLength(100, MinimumLength = 1, ErrorMessage = "Password must have 1 characters")]
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
         [Required]
