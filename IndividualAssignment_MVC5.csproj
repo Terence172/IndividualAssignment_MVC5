@@ -171,6 +171,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\comemsController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\lecturerController.cs" />
@@ -880,10 +881,14 @@
     <Content Include="Views\lecturer\Details.cshtml" />
     <Content Include="Views\lecturer\Edit.cshtml" />
     <Content Include="Views\lecturer\Index.cshtml" />
+    <Content Include="Views\comems\Create.cshtml" />
+    <Content Include="Views\comems\Delete.cshtml" />
+    <Content Include="Views\comems\Details.cshtml" />
+    <Content Include="Views\comems\Edit.cshtml" />
+    <Content Include="Views\comems\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Email\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

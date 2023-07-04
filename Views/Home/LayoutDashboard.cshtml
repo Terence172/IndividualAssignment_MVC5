@@ -75,9 +75,7 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                            <a class="dropdown-item" href="#"><i class="dw dw-bell1"></i> Notifications</a>
-                            <a class="dropdown-item" href="#"> <i class="dw dw-settings2"></i>System Configuration</a>
-                            <a class="dropdown-item" href="faq.html"><i class="dw dw-help"></i> Help</a>
+                            
                             <a class="dropdown-item" href="@Url.Action("Logout", "Login")">
                                 <i class="dw dw-logout"></i> Log Out
                             </a>
@@ -197,7 +195,13 @@
                         <li class="dropdown">
                             <a href="@Url.Action("Index", "lecturer")" class="dropdown-toggle no-arrow">
                                 <span class="micon icon-copy fa fa-users"></span><span class="mtext">Manage Lecturers</span>
-                            </a> 
+                            </a>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="@Url.Action("Index", "comems")" class="dropdown-toggle no-arrow">
+                                <span class="micon icon-copy fa fa-user"></span><span class="mtext">Manage Committee</span>
+                            </a>
                         </li>
 
                         <!--<li class="dropdown">

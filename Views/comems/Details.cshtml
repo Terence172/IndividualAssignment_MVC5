@@ -1,0 +1,86 @@
+﻿@model IndividualAssignment_MVC5.Models.comem
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Home/LayoutDashboard.cshtml";
+}
+
+<div class="page-header">
+    <div class="row">
+
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Committee Member - View</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("DashboardAdmin", "Home")">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "comems")">Committee Members List</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        View Committee Member - <span>@Html.DisplayFor(model => model.lecturer.user.user_firstname) @Html.DisplayFor(model => model.lecturer.user.user_lastname)</span>
+
+                    </li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="col-md-6 col-sm-12 text-right">
+            <div class="dropdown">
+                <a class="btn btn-primary" href="@Url.Action("Create", "comems")" role="button">
+                    Create Committee Member
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- basic table  Start -->
+<div class="pd-20 card-box mb-30">
+
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h4 class="text-blue h4">Committee Member Credentials</h4>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Variable</th>
+                <th scope="col">Content</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Committee Member Username</th>
+                <td>@Html.DisplayFor(model => model.lecturer.user.user_name)</td>
+            </tr>
+            <tr>
+                <th scope="row">Committee Member Email</th>
+                <td>@Html.DisplayFor(model => model.lecturer.user.user_email)</td>
+            </tr>
+            <tr>
+                <th scope="row">Committee Member Name</th>
+                <td>@Html.DisplayFor(model => model.lecturer.user.user_firstname) @Html.DisplayFor(model => model.lecturer.user.user_lastname)</td>
+            </tr>
+            <tr>
+                <th scope="row">Committee Member Faculty</th>
+                <td>@Html.DisplayFor(model => model.lecturer.lect_faculty)</td>
+            </tr>
+            <tr>
+                <th scope="row">Academic Programme Assigned</th>
+                <td>@Html.DisplayFor(model => model.programme.prog_name)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="card card-box text-center">
+        <div class="card-body">
+            <h5 class="card-title">Actions :</h5>
+            <p class="card-text">Choose Carefully :P</p>
+            @Html.ActionLink("Edit this Committee Member", "Edit", new { id = Model.comem_id }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Back to List", "Index", new { id = Model.comem_id }, new { @class = "btn btn-primary" })
+        </div>
+    </div>
+
+
+</div>
