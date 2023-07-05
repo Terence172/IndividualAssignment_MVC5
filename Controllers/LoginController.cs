@@ -36,19 +36,20 @@ namespace IndividualAssignment_MVC5.Controllers
         // GET: User/Register
         public ActionResult Register()
         {
-            var userList = db.users
-                .Select(u => new SelectListItem
+            var lecturerList = db.lecturers
+                .Select(l => new SelectListItem
                 {
-                    Value = u.user_id.ToString(),
-                    Text = u.user_firstname + " " + u.user_lastname
+                    Value = l.lect_id.ToString(),
+                    Text = l.user.user_firstname + " " + l.user.user_lastname
                 })
                 .ToList();
 
-            ViewBag.stu_pref_sup_ID = new SelectList(db.lecturers, "lect_id", "lect_faculty");
+            ViewBag.stu_pref_sup_ID = new SelectList(lecturerList, "Value", "Text");
             ViewBag.prog_id = new SelectList(db.programmes, "prog_id", "prog_name");
 
             return View();
         }
+
 
 
         // POST: User/Register
@@ -81,7 +82,19 @@ namespace IndividualAssignment_MVC5.Controllers
                 db.students.Add(student);
                 db.SaveChanges();
 
-                return RedirectToAction("Index");
+                // Log in the user
+                Session["UserID"] = user.user_id;
+                Session["UserName"] = user.user_name.ToString();
+                Session["FirstName"] = user.user_firstname.ToString();
+                Session["LastName"] = user.user_lastname.ToString();
+                Session["UserType"] = user.user_type.ToString();
+
+                
+                if (user.user_type == "Student")
+                {
+                    return RedirectToAction("DashboardStudent", "Home");
+                }
+                
             }
 
             ViewBag.stu_pref_sup_ID = new SelectList(db.lecturers, "lect_id", "lect_faculty", student.stu_pref_sup_ID);
@@ -89,10 +102,6 @@ namespace IndividualAssignment_MVC5.Controllers
 
             return View(user);
         }
-
-
-
-
 
 
 
