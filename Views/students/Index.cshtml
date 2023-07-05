@@ -1,0 +1,88 @@
+﻿@model IEnumerable<IndividualAssignment_MVC5.Models.student>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Home/LayoutDashboard.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.stu_faculty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.stu_school)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.stu_status_done_sup)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.stu_sup_agreement)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lecturer.lect_faculty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lecturer1.lect_faculty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lecturer2.lect_faculty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lecturer3.lect_faculty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.programme.prog_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.user.user_name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.stu_faculty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.stu_school)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.stu_status_done_sup)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.stu_sup_agreement)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lecturer.lect_faculty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lecturer1.lect_faculty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lecturer2.lect_faculty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lecturer3.lect_faculty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.programme.prog_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.user.user_name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.stu_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.stu_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.stu_id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -14,8 +14,17 @@
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="@Url.Action("DashboardAdmin", "Home")">Home</a></li>
-                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "lecturer")">Lecturer List</a></li>
+                    @if (Session["UserType"].ToString() == "Admin")
+                    {
+                        <li class="breadcrumb-item"><a href="@Url.Action("DashboardAdmin", "Home")">Home</a></li>
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index", "lecturer")">Lecturer List</a></li>
+                    }
+                    else
+                    {
+                        <li class="breadcrumb-item"><a href="@Url.Action("DashboardCommittee", "Home")">Home</a></li>
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index2", "lecturer")">Lecturer List</a></li>
+                    }
+
                     <li class="breadcrumb-item active" aria-current="page">
                         View Lecturer - <span>@Html.DisplayFor(model => model.user_firstname) @Html.DisplayFor(model => model.user_lastname)</span>
 
@@ -73,8 +82,17 @@
         <div class="card-body">
             <h5 class="card-title">Actions :</h5>
             <p class="card-text">Choose Carefully :P</p>
-            @Html.ActionLink("Edit this Lecturer", "Edit", new { id = Model.user_id }, new { @class = "btn btn-warning" })
-            @Html.ActionLink("Back to List", "Index", new { id = Model.user_id }, new { @class = "btn btn-primary" })
+            @if (Session["UserType"].ToString() == "Admin")
+            {
+                @Html.ActionLink("Edit this Lecturer", "Edit", new { id = Model.user_id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Back to List", "Index", new { id = Model.user_id }, new { @class = "btn btn-primary" })
+            }
+            else
+            {
+                @Html.ActionLink("Edit this Lecturer's Domain", "Domain", new { id = Model.user_id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Back to List", "Index2", new { @class = "btn btn-primary" })
+            }
+
         </div>
     </div>
 

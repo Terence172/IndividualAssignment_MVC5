@@ -178,6 +178,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\programmesController.cs" />
+    <Compile Include="Controllers\studentsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -886,6 +887,14 @@
     <Content Include="Views\comems\Details.cshtml" />
     <Content Include="Views\comems\Edit.cshtml" />
     <Content Include="Views\comems\Index.cshtml" />
+    <Content Include="Views\Home\DashboardCommittee.cshtml" />
+    <Content Include="Views\lecturer\Index2.cshtml" />
+    <Content Include="Views\lecturer\Domain.cshtml" />
+    <Content Include="Views\students\Create.cshtml" />
+    <Content Include="Views\students\Delete.cshtml" />
+    <Content Include="Views\students\Details.cshtml" />
+    <Content Include="Views\students\Edit.cshtml" />
+    <Content Include="Views\students\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

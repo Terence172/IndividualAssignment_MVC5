@@ -1,0 +1,148 @@
+﻿@model IEnumerable<IndividualAssignment_MVC5.Models.user>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Home/LayoutDashboard.cshtml";
+}
+
+<div class="page-header">
+    <div class="row">
+
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Lecturers Domain - List</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("DashboardComittee", "Home")">Home</a></li>
+                    <li class="breadcrumb-item">Manage Lecturers Domain</li>
+                    <li class="breadcrumb-item active" aria-current="page">Assign Domain to Lecturers</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+<div class="pd-20 card-box mb-30">
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h4 class="text-blue h4">Lecturers without Domain</h4>
+            <p>Lecturers registered to the <code>.system</code> :P</p>
+        </div>
+    </div>
+    <div class="pb-20">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="table-plus datatable-nosort">Lecturer Username</th>
+                    <th>Name</th>
+                    <th>Faculty</th>
+                    <th class="datatable-nosort">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    if (item.lecturers.Any())
+                    {
+                        if (item.user_type.ToString() != "Committee" && item.lecturers.First().lect_domain == null)
+                        {
+                            <tr>
+                                <td class="table-plus">
+                                    <span>@Html.DisplayFor(modelItem => item.user_name)</span>
+                                </td>
+
+                                <td>@Html.DisplayFor(modelItem => item.user_firstname) @Html.DisplayFor(modelItem => item.user_lastname)</td>
+                                <td>@Html.DisplayFor(modelItem => item.lecturers.First().lect_faculty)</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                            <i class="dw dw-more"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                            <a class="dropdown-item" href="@Url.Action("Details", "lecturer", new { id = item.user_id })">
+                                                <i class="dw dw-eye"></i> View
+                                            </a>
+                                            <a class="dropdown-item" href="@Url.Action("Domain", "lecturer", new { id = item.user_id })">
+                                                <i class="dw dw-settings"></i> Assign Domain
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="pd-20 card-box mb-30">
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h4 class="text-blue h4">Lecturers with Domain</h4>
+        </div>
+    </div>
+    <div class="pb-20">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="table-plus datatable-nosort">Lecturer Username</th>
+                    <th>Name</th>
+                    <th>Faculty</th>
+                    <th>Domain</th>
+                    <th class="datatable-nosort">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    if (item.lecturers.Any())
+                    {
+                        if (item.user_type.ToString() != "Committee" && item.lecturers.First().lect_domain != null)
+                        {
+                            <tr>
+                                <td class="table-plus">
+                                    <span>@Html.DisplayFor(modelItem => item.user_name)</span>
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.user_firstname) @Html.DisplayFor(modelItem => item.user_lastname)</td>
+                                <td>@Html.DisplayFor(modelItem => item.lecturers.First().lect_faculty)</td>
+
+                                @if (item.lecturers.First().lect_domain.ToString() == "Research")
+                                {
+                                    <td><span class="badge badge-primary">Research</span></td>
+                                }
+                                @if (item.lecturers.First().lect_domain.ToString() == "Development")
+                                {
+                                    <td><span class="badge badge-secondary">Development</span></td>
+                                }
+
+                                <td>
+                                    <div class="dropdown">
+                                        <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                            <i class="dw dw-more"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                            <a class="dropdown-item" href="@Url.Action("Details", "lecturer", new { id = item.user_id })">
+                                                <i class="dw dw-eye"></i> View
+                                            </a>
+                                            <a class="dropdown-item" href="@Url.Action("Domain", "lecturer", new { id = item.user_id })">
+                                                <i class="dw dw-settings"></i> Assign Domain
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -33,6 +33,69 @@ namespace IndividualAssignment_MVC5.Controllers
         }
 
 
+        // GET: User/Register
+        public ActionResult Register()
+        {
+            var userList = db.users
+                .Select(u => new SelectListItem
+                {
+                    Value = u.user_id.ToString(),
+                    Text = u.user_firstname + " " + u.user_lastname
+                })
+                .ToList();
+
+            ViewBag.stu_pref_sup_ID = new SelectList(db.lecturers, "lect_id", "lect_faculty");
+            ViewBag.prog_id = new SelectList(db.programmes, "prog_id", "prog_name");
+
+            return View();
+        }
+
+
+        // POST: User/Register
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register([Bind(Include = "user_id,user_name,user_email,user_password,user_firstname,user_lastname")] user user, [Bind(Include = "stu_id,stu_faculty,stu_school,prog_id,stu_pref_sup_ID,user_id")] student student)
+        {
+            if (ModelState.IsValid)
+            {
+                // Set the default user_type
+                user.user_type = "Student";
+
+                // Encrypt the password
+                string encryptedPassword = Encrypt(user.user_password);
+
+                // Set the encrypted password as the user's password
+                user.user_password = encryptedPassword;
+
+                // Save the user record
+                db.users.Add(user);
+                db.SaveChanges();
+
+                // Retrieve the generated user_id
+                int userId = user.user_id;
+
+                // Assign the user_id to the student
+                student.user_id = userId;
+
+                // Save the student record
+                db.students.Add(student);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.stu_pref_sup_ID = new SelectList(db.lecturers, "lect_id", "lect_faculty", student.stu_pref_sup_ID);
+            ViewBag.prog_id = new SelectList(db.programmes, "prog_id", "prog_name", student.prog_id);
+
+            return View(user);
+        }
+
+
+
+
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Index(user objchk)
@@ -48,6 +111,8 @@ namespace IndividualAssignment_MVC5.Controllers
                     {
                         Session["UserID"] = obj.user_id;
                         Session["UserName"] = obj.user_name.ToString();
+                        Session["FirstName"] = obj.user_firstname.ToString();
+                        Session["LastName"] = obj.user_lastname.ToString();
                         Session["UserType"] = obj.user_type.ToString();
 
                         if (obj.user_type == "Admin")
@@ -63,6 +128,11 @@ namespace IndividualAssignment_MVC5.Controllers
                         else if (obj.user_type == "Student")
                         {
                             return RedirectToAction("DashboardStudent", "Home");
+                        }
+
+                        else if (obj.user_type == "Committee")
+                        {
+                            return RedirectToAction("DashboardCommittee", "Home");
                         }
                     /* 
                      Might wanna have more redirect for other user types  c4ca4238a0b923820dcc509a6f75849b
@@ -86,6 +156,38 @@ namespace IndividualAssignment_MVC5.Controllers
             string encryptedPassword = Convert.ToBase64String(plainBytes);
             return encryptedPassword;
         }
+
+
+        private List<SelectListItem> GetProgramList()
+        {
+            // Retrieve the program data from the database
+            var programs = db.programmes.ToList();
+
+            // Create a list of SelectListItem for the dropdown
+            var programList = programs.Select(p => new SelectListItem
+            {
+                Value = p.prog_id.ToString(),
+                Text = p.prog_name
+            }).ToList();
+
+            return programList;
+        }
+
+        private List<SelectListItem> GetSupervisorList()
+        {
+            // Retrieve the supervisor data from the database
+            var supervisors = db.lecturers.ToList();
+
+            // Create a list of SelectListItem for the dropdown
+            var supervisorList = supervisors.Select(s => new SelectListItem
+            {
+                Value = s.lect_id.ToString(),
+                Text = s.user.user_firstname + " " + s.user.user_lastname
+            }).ToList();
+
+            return supervisorList;
+        }
+
 
 
         [HttpPost]

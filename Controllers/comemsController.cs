@@ -68,9 +68,21 @@ namespace IndividualAssignment_MVC5.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.comems.Add(comem);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var lecturer = db.lecturers.Include(l => l.user).FirstOrDefault(l => l.lect_id == comem.lect_id);
+                if (lecturer != null)
+                {
+                    var user = lecturer.user;
+                    if (user != null)
+                    {
+                        user.user_type = "Committee";
+                        db.SaveChanges();
+
+                        db.comems.Add(comem);
+                        db.SaveChanges();
+
+                        return RedirectToAction("Index");
+                    }
+                }
             }
 
             ViewBag.lect_id = new SelectList(db.lecturers, "lect_id", "lect_faculty", comem.lect_id);
@@ -170,10 +182,18 @@ namespace IndividualAssignment_MVC5.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             comem comem = db.comems.Find(id);
+
+            // Retrieve the associated lecturer's user record
+            var lecturerUser = comem.lecturer.user;
+
+            // Update the user_type property
+            lecturerUser.user_type = "Lecturer";
+
             db.comems.Remove(comem);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
 
         protected override void Dispose(bool disposing)
         {

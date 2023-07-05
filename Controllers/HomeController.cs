@@ -35,6 +35,11 @@ namespace IndividualAssignment_MVC5.Controllers
                 return RedirectToAction("DashboardStudent", "Home");
             }
 
+            if (Session["UserType"].ToString() == "Committee")
+            {
+                return RedirectToAction("DashboardCommittee", "Home");
+            }
+
 
             //ViewBag.tenantcount = db.tenants.Count();
             //ViewBag.landlords = db.landlords.Count();
@@ -67,6 +72,11 @@ namespace IndividualAssignment_MVC5.Controllers
                 return RedirectToAction("DashboardAdmin", "Home");
             }
 
+            if (Session["UserType"].ToString() == "Committee")
+            {
+                return RedirectToAction("DashboardCommittee", "Home");
+            }
+
             return View();
         }
 
@@ -86,6 +96,37 @@ namespace IndividualAssignment_MVC5.Controllers
             if (Session["UserType"].ToString() == "Admin")
             {
                 return RedirectToAction("DashboardAdmin", "Home");
+            }
+
+            if (Session["UserType"].ToString() == "Committee")
+            {
+                return RedirectToAction("DashboardCommittee", "Home");
+            }
+
+            return View();
+        }
+
+        public ActionResult DashboardCommittee()
+        {
+            if (Session["UserID"] == null)
+            {
+                ViewBag.user = db.users.Count();
+                return RedirectToAction("Index", "Login");
+            }
+
+            if (Session["UserType"].ToString() == "Lecturer")
+            {
+                return RedirectToAction("DashboardLecturer", "Home");
+            }
+
+            if (Session["UserType"].ToString() == "Admin")
+            {
+                return RedirectToAction("DashboardAdmin", "Home");
+            }
+
+            if (Session["UserType"].ToString() == "Student")
+            {
+                return RedirectToAction("DashboardStudent", "Home");
             }
 
             return View();
