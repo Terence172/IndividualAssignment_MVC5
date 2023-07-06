@@ -1,99 +1,144 @@
-﻿@model IndividualAssignment_MVC5.Models.student
+﻿@model IndividualAssignment_MVC5.Models.user
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Home/LayoutDashboard.cshtml";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>student</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.stu_faculty)
-        </dt>
+<div class="page-header">
+    <div class="row">
 
-        <dd>
-            @Html.DisplayFor(model => model.stu_faculty)
-        </dd>
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Student - View</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.stu_school)
-        </dt>
+                        <li class="breadcrumb-item"><a href="@Url.Action("DashboardCommittee", "Home")">Home</a></li>
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index", "students")">Students List</a></li>
+                    
 
-        <dd>
-            @Html.DisplayFor(model => model.stu_school)
-        </dd>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        View Student - <span>@Html.DisplayFor(model => model.user_firstname) @Html.DisplayFor(model => model.user_lastname)</span>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.stu_status_done_sup)
-        </dt>
+                    </li>
+                </ol>
+            </nav>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.stu_status_done_sup)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.stu_sup_agreement)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.stu_sup_agreement)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.lecturer.lect_faculty)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.lecturer.lect_faculty)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.lecturer1.lect_faculty)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.lecturer1.lect_faculty)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.lecturer2.lect_faculty)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.lecturer2.lect_faculty)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.lecturer3.lect_faculty)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.lecturer3.lect_faculty)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.programme.prog_name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.programme.prog_name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.user.user_name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.user.user_name)
-        </dd>
-
-    </dl>
+        <div class="col-md-6 col-sm-12 text-right">
+            <div class="dropdown">
+                <a class="btn btn-primary" href="@Url.Action("Create", "students")" role="button">
+                    Create Student
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.stu_id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<!-- basic table  Start -->
+<div class="pd-20 card-box mb-30">
+
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h4 class="text-blue h4">Students Credentials</h4>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Variable</th>
+                <th scope="col">Content</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Student Username</th>
+                <td>@Html.DisplayFor(model => model.user_name)</td>
+            </tr>
+            <tr>
+                <th scope="row">Student Email</th>
+                <td>@Html.DisplayFor(model => model.user_email)</td>
+            </tr>
+            <tr>
+                <th scope="row">Student Name</th>
+                <td>@Html.DisplayFor(model => model.user_firstname) @Html.DisplayFor(model => model.user_lastname)</td>
+            </tr>
+            <tr>
+                <th scope="row">Student Faculty</th>
+                <td>@Html.DisplayFor(model => model.students.First().stu_faculty)</td>
+            </tr>
+
+            <tr>
+                <th scope="row">Student School</th>
+                <td>@Html.DisplayFor(model => model.students.First().stu_school)</td>
+            </tr>
+
+            <tr>
+                <th scope="row">Student Academic Programme</th>
+                <td>@Html.DisplayFor(model => model.students.First().programme.prog_name)</td>
+            </tr>
+
+            @if (Model.students.First().stu_status_done_sup == 1)
+            {
+                <tr>
+                    <th scope="row">Student's Assigned Supervisor</th>
+                    <td>
+                        @Html.DisplayFor(model => model.students.First().lecturer2.user.user_firstname) @Html.DisplayFor(model => model.students.First().lecturer2.user.user_lastname) (@Html.DisplayFor(model => model.students.First().lecturer2.user.user_name))
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">Student's Preffered Supervisor</th>
+                    <td>
+                        @Html.DisplayFor(model => model.students.First().lecturer3.user.user_firstname) @Html.DisplayFor(model => model.students.First().lecturer3.user.user_lastname) (@Html.DisplayFor(model => model.students.First().lecturer3.user.user_name))
+                    </td>
+                </tr>
+
+                if (Model.students.First().stu_evaluator1 != null)
+                {
+                    <tr>
+                        <th scope="row">Student's Evaluator 1</th>
+                        <td>
+                            @Html.DisplayFor(model => model.students.First().lecturer.user.user_firstname) @Html.DisplayFor(model => model.students.First().lecturer.user.user_lastname) (@Html.DisplayFor(model => model.students.First().lecturer.user.user_name))
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Student's Evaluator 2</th>
+                        <td>
+                            @Html.DisplayFor(model => model.students.First().lecturer2.user.user_firstname) @Html.DisplayFor(model => model.students.First().lecturer2.user.user_lastname) (@Html.DisplayFor(model => model.students.First().lecturer2.user.user_name))
+                        </td>
+                    </tr>
+                }
+
+            }
+
+            @if (Model.students.First().stu_status_done_sup != 1)
+            {
+                <tr>
+                    <th scope="row">Student's Preffered Supervisor</th>
+                    <td>
+                        @Html.DisplayFor(model => model.students.First().lecturer3.user.user_firstname) @Html.DisplayFor(model => model.students.First().lecturer3.user.user_lastname) (@Html.DisplayFor(model => model.students.First().lecturer3.user.user_name))
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+    <div class="card card-box text-center">
+        <div class="card-body">
+            <h5 class="card-title">Actions :</h5>
+            <p class="card-text">Choose Carefully :P</p>
+
+                @Html.ActionLink("Edit this Student", "Edit", new { id = Model.user_id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Back to List", "Index", new { id = Model.user_id }, new { @class = "btn btn-primary" })
+            
+
+        </div>
+    </div>
+
+
+</div>

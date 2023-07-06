@@ -1,0 +1,210 @@
+﻿@model IndividualAssignment_MVC5.Models.user
+
+@{
+    ViewBag.Title = "Evaluater";
+    Layout = "~/Views/Home/LayoutDashboard.cshtml";
+}
+
+<div class="page-header">
+    <div class="row">
+
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Student - Assign Evaluator</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+
+                    <li class="breadcrumb-item"><a href="@Url.Action("DashboardCommittee", "Home")">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "students")">Students List</a></li>
+
+
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Assign Evaluator Student - <span>@Html.DisplayFor(model => model.user_firstname) @Html.DisplayFor(model => model.user_lastname)</span>
+
+                    </li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="col-md-6 col-sm-12 text-right">
+            <div class="dropdown">
+                <a class="btn btn-primary" href="@Url.Action("Create", "students")" role="button">
+                    Create Student
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- basic table  Start -->
+<div class="pd-20 card-box mb-30">
+
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h4 class="text-blue h4">Student Credentials</h4>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Variable</th>
+                <th scope="col">Content</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Student Username</th>
+                <td>@Html.DisplayFor(model => model.user_name)</td>
+            </tr>
+            <tr>
+                <th scope="row">Student Email</th>
+                <td>@Html.DisplayFor(model => model.user_email)</td>
+            </tr>
+            <tr>
+                <th scope="row">Student Name</th>
+                <td>@Html.DisplayFor(model => model.user_firstname) @Html.DisplayFor(model => model.user_lastname)</td>
+            </tr>
+            <tr>
+                <th scope="row">Student Faculty</th>
+                <td>@Html.DisplayFor(model => model.students.First().stu_faculty)</td>
+            </tr>
+            <tr>
+                <th scope="row">Student School</th>
+                <td>@Html.DisplayFor(model => model.students.First().stu_school)</td>
+            </tr>
+
+
+
+                <tr>
+                    <th scope="row">Student Supervisor</th>
+                    <td>@Html.DisplayFor(model => model.students.First().lecturer2.user.user_firstname) @Html.DisplayFor(model => model.students.First().lecturer2.user.user_lastname)</td>
+                </tr>
+
+            
+        </tbody>
+    </table>
+
+</div>
+
+
+<!-- basic table  Start -->
+<div class="pd-20 card-box mb-30">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="clearfix mb-20">
+            <div class="pull-left">
+                <h4 class="text-blue h4">Select Students Evaluator</h4>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.user_id)
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Variable</th>
+                    <th scope="col">Content</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <th scope="row">Student Evaluator 1</th>
+                    <td>
+                        @Html.DropDownListFor(model => model.students.First().stu_evaluator1, ViewBag.prog_id as SelectList, "Select Students Evaluator 1", new { @class = "form-control", @required = "", @id = "students_0__stu_evaluator1" })
+                        @Html.ValidationMessageFor(model => model.students.First().stu_evaluator1, "", new { @class = "text-danger" })
+                        <small>They will not have a preference!</small>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">Student Evaluator 2</th>
+                    <td>
+                        @Html.DropDownListFor(model => model.students.First().stu_evaluator2, ViewBag.stu_pref_sup_ID as SelectList, "Select Students Evaluator 2", new { @class = "form-control", @required = "", @id = "students_0__stu_evaluator2" })
+                        @Html.ValidationMessageFor(model => model.students.First().stu_evaluator2, "", new { @class = "text-danger" })
+                        <small>They will not have a preference!</small>
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
+
+        <div class="card card-box text-center">
+            <div class="card-body">
+                <h5 class="card-title">Actions :</h5>
+                <p class="card-text">Choose Carefully :P</p>
+
+                <a class="btn btn-info" data-toggle="modal" data-target="#confirmation-modal" role="button">
+                    Submit
+                </a>
+
+                <a class="btn btn-outline-warning" href="@Url.Action("Index", "students")" role="button">
+                    Cancel
+                </a>
+            </div>
+        </div>
+
+        <div class="modal fade" id="confirmation-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center font-18">
+                        <h4 class="padding-top-30 mb-30 weight-500">Are you sure you want to assign these Evaluators?</h4>
+                        <h5 class="mb-30 weight-500">This will update the Student</h5>
+                        <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                NO
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary border-radius-100 btn-block confirmation-btn">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                                YES
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Get references to the two dropdown lists
+            var evaluator1Dropdown = $('#students_0__stu_evaluator1');
+            var evaluator2Dropdown = $('#students_0__stu_evaluator2');
+
+            // Attach change event handler to evaluator1 dropdown
+            evaluator1Dropdown.change(function () {
+                // Get the selected value
+                var selectedEvaluator1 = $(this).val();
+
+                // Disable the option in evaluator2 dropdown with the same value
+                evaluator2Dropdown.find('option').prop('disabled', function () {
+                    return $(this).val() === selectedEvaluator1;
+                });
+            });
+
+            // Attach change event handler to evaluator2 dropdown
+            evaluator2Dropdown.change(function () {
+                // Get the selected value
+                var selectedEvaluator2 = $(this).val();
+
+                // Disable the option in evaluator1 dropdown with the same value
+                evaluator1Dropdown.find('option').prop('disabled', function () {
+                    return $(this).val() === selectedEvaluator2;
+                });
+            });
+        });
+    </script>
+
+}

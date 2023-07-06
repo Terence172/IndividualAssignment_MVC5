@@ -895,6 +895,8 @@
     <Content Include="Views\students\Details.cshtml" />
     <Content Include="Views\students\Edit.cshtml" />
     <Content Include="Views\students\Index.cshtml" />
+    <Content Include="Views\students\Evaluator.cshtml" />
+    <Content Include="Views\students\Supervisor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

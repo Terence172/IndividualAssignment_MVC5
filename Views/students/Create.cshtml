@@ -1,108 +1,180 @@
-﻿@model IndividualAssignment_MVC5.Models.student
+﻿@model IndividualAssignment_MVC5.Models.user
 
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Home/LayoutDashboard.cshtml";
 }
 
-<h2>Create</h2>
+<div class="page-header">
+    <div class="row">
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>student</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.stu_faculty, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.stu_faculty, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.stu_faculty, "", new { @class = "text-danger" })
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Student - Create Student</h4>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.stu_school, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.stu_school, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.stu_school, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.prog_id, "prog_id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("prog_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.prog_id, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.stu_sup_ID, "stu_sup_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("stu_sup_ID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.stu_sup_ID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.stu_pref_sup_ID, "stu_pref_sup_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("stu_pref_sup_ID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.stu_pref_sup_ID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.stu_status_done_sup, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.stu_status_done_sup, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.stu_status_done_sup, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.stu_sup_agreement, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.stu_sup_agreement, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.stu_sup_agreement, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.user_id, "user_id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("user_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.user_id, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.stu_evaluator1, "stu_evaluator1", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("stu_evaluator1", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.stu_evaluator1, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.stu_evaluator2, "stu_evaluator2", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("stu_evaluator2", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.stu_evaluator2, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("DashboardCommittee", "Home")">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "students")">Students List</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Create Student
+                    </li>
+                </ol>
+            </nav>
         </div>
     </div>
-}
+</div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+
+
+<!-- basic table  Start -->
+<div class="pd-20 card-box mb-30">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="clearfix mb-20">
+            <div class="pull-left">
+                <h4 class="text-blue h4">Create Student Form</h4>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Variable</th>
+                    <th scope="col">Content</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <th scope="row">Username : Student</th>
+                    <td>
+                        @Html.EditorFor(model => model.user_name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Username of Student Goes Here", @required = "" } })
+                        @Html.ValidationMessageFor(model => model.user_name, "", new { @class = "text-danger" })
+                        <small>They will be using this to login into the system</small>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Password : Student</th>
+                    <td>
+                        @Html.EditorFor(model => model.user_password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password of Student Goes Here", @required = "" } })
+                        @Html.ValidationMessageFor(model => model.user_password, "", new { @class = "text-danger" })
+                        <small>They will be using this to login into the system</small>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">First Name : Student</th>
+                    <td>
+                        @Html.EditorFor(model => model.user_firstname, new { htmlAttributes = new { @class = "form-control", @placeholder = "First Name of Student Goes Here", @required = "" } })
+                        @Html.ValidationMessageFor(model => model.user_firstname, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">Last Name : Student</th>
+                    <td>
+                        @Html.EditorFor(model => model.user_lastname, new { htmlAttributes = new { @class = "form-control", @placeholder = "Last Name of Student Goes Here", @required = "" } })
+                        @Html.ValidationMessageFor(model => model.user_lastname, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">Email : Student</th>
+                    <td>
+                        @Html.EditorFor(model => model.user_email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email of Student Goes Here", @type = "email", @required = "" } })
+                        @Html.ValidationMessageFor(model => model.user_email, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+
+
+
+
+
+                <tr>
+                    <th scope="row">Below is <code>.For Student Specific</code> Credentials</th>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <th scope="row">Student Faculty</th>
+                    <td>
+                        @Html.EditorFor(model => model.students.First().stu_faculty, new { htmlAttributes = new { @class = "form-control", @placeholder = "Student Faculty Goes Here", @type = "text", @required = "" } })
+                        @Html.ValidationMessageFor(model => model.students.First().stu_faculty, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">Student School</th>
+                    <td>
+                        @Html.EditorFor(model => model.students.First().stu_school, new { htmlAttributes = new { @class = "form-control", @placeholder = "Student School Goes Here", @type = "text", @required = "" } })
+                        @Html.ValidationMessageFor(model => model.students.First().stu_school, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <th scope="row">Student Academic Programme</th>
+                    <td>
+                        @Html.DropDownListFor(model => model.students.First().prog_id, ViewBag.prog_id as SelectList, "Select Students Academic Programme", new { @class = "form-control", @required = "" })
+                        @Html.ValidationMessageFor(model => model.students.First().prog_id, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">Student Permanent Supervisor</th>
+                    <td>
+                        @Html.DropDownListFor(model => model.students.First().stu_sup_ID, ViewBag.stu_pref_sup_ID as SelectList, "Select Students Supervisor", new { @class = "form-control", @required = "" })
+                        @Html.ValidationMessageFor(model => model.students.First().stu_sup_ID, "", new { @class = "text-danger" })
+                        <small>They will not have a preference!</small>
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
+
+        <div class="card card-box text-center">
+            <div class="card-body">
+                <h5 class="card-title">Actions :</h5>
+                <p class="card-text">Choose Carefully :P</p>
+
+                <a class="btn btn-info" data-toggle="modal" data-target="#confirmation-modal" role="button">
+                    Submit
+                </a>
+
+                <a class="btn btn-outline-warning" href="@Url.Action("Index", "students")" role="button">
+                    Cancel
+                </a>
+            </div>
+        </div>
+
+        <div class="modal fade" id="confirmation-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center font-18">
+                        <h4 class="padding-top-30 mb-30 weight-500">Are you sure you want to create this Student?</h4>
+                        <h5 class="mb-30 weight-500">An Email Will be Sent to this Student</h5>
+                        <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                NO
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary border-radius-100 btn-block confirmation-btn">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                                YES
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
 </div>
