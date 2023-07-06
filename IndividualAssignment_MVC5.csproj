@@ -178,6 +178,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\programmesController.cs" />
+    <Compile Include="Controllers\StudentLecturerController.cs" />
     <Compile Include="Controllers\studentsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -822,6 +823,8 @@
     <Content Include="Content\assets\vendors\fonts\themify.eot" />
     <Content Include="Content\assets\vendors\fonts\themify.ttf" />
     <Content Include="Content\assets\vendors\fonts\themify.woff" />
+    <Content Include="Content\assets\H_1-PSM-1-Project-Supervision-Consent-Form-PSM.CI_.02-16012019.doc" />
+    <Content Include="Content\assets\H_2-PSM-1-Project-Proposal-Form-PSM.CI_.03-v1.1-16012019.doc" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -897,9 +900,14 @@
     <Content Include="Views\students\Index.cshtml" />
     <Content Include="Views\students\Evaluator.cshtml" />
     <Content Include="Views\students\Supervisor.cshtml" />
+    <Content Include="Views\StudentLecturer\Index.cshtml" />
+    <Content Include="Views\StudentLecturer\LecturerIndex.cshtml" />
+    <Content Include="Views\StudentLecturer\DetailsStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\assets\uploads\" />
+    <Folder Include="Views\StudentsLogged\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

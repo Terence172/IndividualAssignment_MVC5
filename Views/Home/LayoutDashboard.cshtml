@@ -416,6 +416,12 @@
                             </a>
                         </li>
 
+                        <li class="dropdown">
+                            <a href="@Url.Action("Index", "StudentLecturer")" class="dropdown-toggle no-arrow">
+                                <span class="micon icon-copy fa fa-pencil"></span><span class="mtext">Supervisors &amp; Evaluators</span>
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -424,7 +430,7 @@
     }
 
 
-  
+
 
     @if (Session["UserType"].ToString() == "Lecturer")
     {
@@ -567,6 +573,12 @@
                         <li class="dropdown">
                             <a href="@Url.Action("DashboardLecturer", "Home")" class="dropdown-toggle no-arrow">
                                 <span class="micon icon-copy fa fa-dashboard"></span><span class="mtext">Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="@Url.Action("LecturerIndex", "StudentLecturer")" class="dropdown-toggle no-arrow">
+                                <span class="micon icon-copy fa fa-graduation-cap"></span><span class="mtext">Students Supervised</span>
                             </a>
                         </li>
 
