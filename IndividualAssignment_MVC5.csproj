@@ -903,6 +903,8 @@
     <Content Include="Views\StudentLecturer\Index.cshtml" />
     <Content Include="Views\StudentLecturer\LecturerIndex.cshtml" />
     <Content Include="Views\StudentLecturer\DetailsStudent.cshtml" />
+    <Content Include="Views\StudentLecturer\ConsentForm.cshtml" />
+    <Content Include="Views\StudentLecturer\ProposalStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

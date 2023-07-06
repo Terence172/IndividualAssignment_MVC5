@@ -422,6 +422,15 @@
                             </a>
                         </li>
 
+                        @if (Session["ViewableStudent"].ToString() == "Yes")
+                        {
+                            <li class="dropdown">
+                                <a href="@Url.Action("ProposalStudent", "StudentLecturer")" class="dropdown-toggle no-arrow">
+                                    <span class="micon icon-copy fa fa-check"></span><span class="mtext">Proposal</span>
+                                </a>
+                            </li>
+                        }
+
                     </ul>
                 </div>
             </div>

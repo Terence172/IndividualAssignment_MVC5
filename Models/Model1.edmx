@@ -48,7 +48,7 @@
           <Property Name="prop_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="prop_title" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="prop_type" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="prop_file" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="prop_file" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="prop_status" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="stu_id" Type="int" Nullable="false" />
         </EntityType>
@@ -335,7 +335,7 @@
           <Property Name="prop_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="prop_title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="prop_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="prop_file" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prop_file" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="prop_status" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="stu_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="comments" Relationship="Self.FK_comment_proposal" FromRole="proposal" ToRole="comment" />

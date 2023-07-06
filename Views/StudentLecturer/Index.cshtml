@@ -106,6 +106,19 @@
                 </tr>
             }
 
+            @if (Model.students.First().stu_evaluator1 == null && Model.students.First().stu_sup_agreement != null)
+            {
+                <tr>
+                    <th scope="row">Your First Evaluator</th>
+                    <td>Not Yet Assigned :P</td>
+                </tr>
+
+                <tr>
+                    <th scope="row">Your Second Evaluator</th>
+                    <td>Not Yet Assigned :P</td>
+                </tr>
+            }
+
         </tbody>
     </table>
 

@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using static System.Net.Mime.MediaTypeNames;
 using System.Xml.Linq;
+using System.Data.Entity.Validation;
 
 namespace IndividualAssignment_MVC5.Controllers
 {
@@ -79,6 +80,55 @@ namespace IndividualAssignment_MVC5.Controllers
             return File(fileBytes, "application/pdf");
         }
 
+        public ActionResult GetPdfProposal()
+        {
+            int id = int.Parse(Session["UserID"].ToString());
+
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            user user = db.users.Find(id);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Retrieve the existing student record based on the user_id
+            student existingStudent = db.students.SingleOrDefault(i => i.user_id == user.user_id);
+
+            string pdfFilePath = Server.MapPath("~/Content/assets/uploads/" + existingStudent.proposals.First().prop_file);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(pdfFilePath);
+            return File(fileBytes, "application/pdf");
+        }
+
+
+
+        public ActionResult GetPdfFormLecturer(int? id)
+        {
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            user user = db.users.Find(id);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Retrieve the existing student record based on the user_id
+            student existingStudent = db.students.SingleOrDefault(i => i.user_id == user.user_id);
+
+            string pdfFilePath = Server.MapPath("~/Content/assets/uploads/" + existingStudent.stu_sup_agreement);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(pdfFilePath);
+            return File(fileBytes, "application/pdf");
+        }
 
         // POST: lecturer/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -116,6 +166,8 @@ namespace IndividualAssignment_MVC5.Controllers
             return View(user);
         }
 
+        
+
         // POST: StudentLecturer/UploadConsentForm
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -125,6 +177,16 @@ namespace IndividualAssignment_MVC5.Controllers
             {
                 // Retrieve the existing student record based on the user_id
                 student existingStudent = db.students.SingleOrDefault(i => i.user_id == user.user_id);
+
+                // Delete the old consent form if it exists
+                if (existingStudent != null && !string.IsNullOrEmpty(existingStudent.stu_sup_agreement))
+                {
+                    string oldFilePath = Path.Combine(Server.MapPath("~/Content/assets/uploads"), existingStudent.stu_sup_agreement);
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                }
 
                 // Save the uploaded consent form
                 string fileName = Path.GetFileName(stu_sup_agreement.FileName);
@@ -139,11 +201,55 @@ namespace IndividualAssignment_MVC5.Controllers
                     db.SaveChanges();
                 }
 
-                return RedirectToAction("Index");
+                if(Session["UserType"].ToString() == "Lecturer")
+                {
+                    return RedirectToAction("LecturerIndex", "StudentLecturer");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "StudentLecturer");
+                }
+               
             }
 
             return View(user);
         }
+
+
+        // POST: StudentLecturer/UploadProposal
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UploadProposal([Bind(Include = "stu_id")] student student, [Bind(Include = "prop_id,prop_title,prop_type,prop_file")] proposal proposal, HttpPostedFileBase prop_file)
+        {
+            if (ModelState.IsValid)
+            {
+                
+                    // Retrieve the generated user_id
+                    int stuId = student.stu_id;
+                    proposal.stu_id = stuId;
+                    proposal.prop_status = "Submitted";
+
+                    // Save the uploaded consent form
+                    string fileName = Path.GetFileName(prop_file.FileName);
+                    string filePath = Path.Combine(Server.MapPath("~/Content/assets/uploads"), fileName);
+                    prop_file.SaveAs(filePath);
+
+                    proposal.prop_file = fileName;
+
+                
+                    // Save the user record
+                    db.proposals.Add(proposal);
+                    db.SaveChanges();
+
+                    return RedirectToAction("ProposalStudent", "StudentLecturer");
+                
+
+            }
+
+            return View(student);
+        }
+
+
 
 
         public ActionResult LecturerIndex()
@@ -176,6 +282,32 @@ namespace IndividualAssignment_MVC5.Controllers
 
         }
 
+
+        public ActionResult ProposalStudent()
+        {
+            int id = int.Parse(Session["UserID"].ToString());
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            user user = db.users.Find(id);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Retrieve the existing student record based on the user_id
+            student existingStudent = db.students.SingleOrDefault(i => i.user_id == user.user_id);
+
+            return View(existingStudent);
+        }
+
+
+
+
         // GET: lecturer/Details/5
         public ActionResult DetailsStudent(int? id)
         {
@@ -188,6 +320,23 @@ namespace IndividualAssignment_MVC5.Controllers
             {
                 return HttpNotFound();
             }
+            return View(user);
+        }
+
+
+        // GET: lecturer/Details/5
+        public ActionResult ConsentForm(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            user user = db.users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
             return View(user);
         }
 

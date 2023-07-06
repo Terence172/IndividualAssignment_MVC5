@@ -136,7 +136,19 @@ namespace IndividualAssignment_MVC5.Controllers
 
                         else if (obj.user_type == "Student")
                         {
-                            return RedirectToAction("DashboardStudent", "Home");
+                            student existingStudent = db.students.SingleOrDefault(i => i.user_id == obj.user_id);
+                            
+                            if(existingStudent.stu_sup_agreement != null && existingStudent.stu_evaluator1 != null)
+                            {
+                                Session["ViewableStudent"] = "Yes";
+                                return RedirectToAction("DashboardStudent", "Home");
+                            }
+                            else
+                            {
+                                Session["ViewableStudent"] = "No";
+                                return RedirectToAction("DashboardStudent", "Home");
+                            }
+
                         }
 
                         else if (obj.user_type == "Committee")

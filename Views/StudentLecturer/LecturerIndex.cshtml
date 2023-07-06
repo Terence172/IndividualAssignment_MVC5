@@ -38,6 +38,7 @@
                     <th class="table-plus datatable-nosort">Student Username</th>
                     <th>Student Name</th>
                     <th>Student Academic Programme</th>
+                    <th>Student Supplier Agreement Form Status</th>
                     <th class="datatable-nosort">Action</th>
                 </tr>
             </thead>
@@ -55,16 +56,36 @@
 
                         <td>@Html.DisplayFor(modelItem => item.user.user_firstname) @Html.DisplayFor(modelItem => item.user.user_lastname)</td>
                         <td>@Html.DisplayFor(modelItem => item.programme.prog_name)</td>
+
+                        @if (item.stu_sup_agreement == null)
+                        {
+                            <td><span class="badge badge-warning">Not Submitted</span></td>
+                        }
+                        @if (item.stu_sup_agreement != null)
+                        {
+                            <td><span class="badge badge-success">Submitted</span></td>
+                        }
+
                         <td>
                             <div class="dropdown">
                                 <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                                     <i class="dw dw-more"></i>
                                 </a>
+   
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                     <a class="dropdown-item" href="@Url.Action("DetailsStudent", "StudentLecturer", new { id = item.user_id })">
                                         <i class="dw dw-eye"></i> View
                                     </a>
+
+                                    @if (item.stu_sup_agreement != null)
+                                    {
+                                        <a class="dropdown-item" href="@Url.Action("ConsentForm", "StudentLecturer", new { id = item.user_id })">
+                                            <i class="dw dw-upload"></i> Consent Form
+                                        </a>
+                                    }
+                                
                                 </div>
+
                             </div>
                         </td>
                     </tr>
