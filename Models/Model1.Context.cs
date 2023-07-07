@@ -26,12 +26,12 @@ namespace IndividualAssignment_MVC5.Models
         }
     
         public virtual DbSet<comem> comems { get; set; }
-        public virtual DbSet<comment> comments { get; set; }
         public virtual DbSet<lecturer> lecturers { get; set; }
         public virtual DbSet<programme> programmes { get; set; }
         public virtual DbSet<proposal> proposals { get; set; }
         public virtual DbSet<student> students { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<comment> comments { get; set; }
     }
 }

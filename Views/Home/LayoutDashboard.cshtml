@@ -426,7 +426,7 @@
                         {
                             <li class="dropdown">
                                 <a href="@Url.Action("ProposalStudent", "StudentLecturer")" class="dropdown-toggle no-arrow">
-                                    <span class="micon icon-copy fa fa-check"></span><span class="mtext">Proposal</span>
+                                    <span class="micon icon-copy fa fa-paperclip"></span><span class="mtext">Proposal</span>
                                 </a>
                             </li>
                         }
@@ -591,6 +591,11 @@
                             </a>
                         </li>
 
+                        <li class="dropdown">
+                            <a href="@Url.Action("LectProposalIndex", "StudentLecturer")" class="dropdown-toggle no-arrow">
+                                <span class="micon icon-copy fa fa-paperclip"></span><span class="mtext">Manage Proposals</span>
+                            </a>
+                        </li>
 
                     </ul>
                 </div>
@@ -757,6 +762,13 @@
                         <li class="dropdown">
                             <a href="@Url.Action("Index", "students")" class="dropdown-toggle no-arrow">
                                 <span class="micon icon-copy fa fa-graduation-cap"></span><span class="mtext">Manage Students</span>
+                            </a>
+                        </li>
+
+
+                        <li class="dropdown">
+                            <a href="@Url.Action("LectProposalIndex", "StudentLecturer")" class="dropdown-toggle no-arrow">
+                                <span class="micon icon-copy fa fa-paperclip"></span><span class="mtext">Manage Proposals</span>
                             </a>
                         </li>
 

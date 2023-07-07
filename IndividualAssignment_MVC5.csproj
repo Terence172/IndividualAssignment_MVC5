@@ -628,6 +628,7 @@
     <Content Include="Content\assets\vendors\images\img3.jpg" />
     <Content Include="Content\assets\vendors\images\img4.jpg" />
     <Content Include="Content\assets\vendors\images\img5.jpg" />
+    <Content Include="Content\assets\vendors\images\Incoming.jpg" />
     <Content Include="Content\assets\vendors\images\internet-explorer.png" />
     <Content Include="Content\assets\vendors\images\landlord.jpg" />
     <Content Include="Content\assets\vendors\images\layout\header-dark.png" />
@@ -643,6 +644,7 @@
     <Content Include="Content\assets\vendors\images\modal-img3.jpg" />
     <Content Include="Content\assets\vendors\images\new-loader.gif" />
     <Content Include="Content\assets\vendors\images\opera.png" />
+    <Content Include="Content\assets\vendors\images\Outgoing.jpg" />
     <Content Include="Content\assets\vendors\images\page-icon.svg" />
     <Content Include="Content\assets\vendors\images\person.svg" />
     <Content Include="Content\assets\vendors\images\photo1.jpg" />
@@ -905,6 +907,8 @@
     <Content Include="Views\StudentLecturer\DetailsStudent.cshtml" />
     <Content Include="Views\StudentLecturer\ConsentForm.cshtml" />
     <Content Include="Views\StudentLecturer\ProposalStudent.cshtml" />
+    <Content Include="Views\StudentLecturer\ViewProposalLect.cshtml" />
+    <Content Include="Views\StudentLecturer\LectProposalIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

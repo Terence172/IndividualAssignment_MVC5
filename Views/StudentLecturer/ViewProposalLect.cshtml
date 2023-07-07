@@ -1,10 +1,12 @@
 ﻿@model IndividualAssignment_MVC5.Models.student
 
 @{
-    ViewBag.Title = "ProposalStudent";
+    ViewBag.Title = "ViewProposalLect";
     Layout = "~/Views/Home/LayoutDashboard.cshtml";
-
 }
+
+<h2>ViewProposalLect</h2>
+
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/web/viewer.css">
 
@@ -12,12 +14,12 @@
     <div class="row">
         <div class="col-md-6 col-sm-12">
             <div class="title">
-                <h4>Your Proposal Submission</h4>
+                <h4>@Model.user.user_firstname @Model.user.user_lastname - Proposal Submission</h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="@Url.Action("DashboardStudent", "Home")">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Proposal</li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("DashboardLecturer", "Home")">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">View Student's Proposal</li>
                 </ol>
             </nav>
         </div>

@@ -27,8 +27,8 @@ namespace IndividualAssignment_MVC5.Models
         public string prop_status { get; set; }
         public int stu_id { get; set; }
     
+        public virtual student student { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<comment> comments { get; set; }
-        public virtual student student { get; set; }
     }
 }

@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="c08ae19d1ed24fa2b50df2efe5d9069c" Name="Diagram1">
         <EntityTypeShape EntityType="db_individualTestModel.comem" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_individualTestModel.comment" Width="1.5" PointX="12.75" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="db_individualTestModel.lecturer" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="db_individualTestModel.programme" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="db_individualTestModel.proposal" Width="1.5" PointX="10.5" PointY="4.5" IsExpanded="true" />
@@ -15,7 +14,6 @@
         <EntityTypeShape EntityType="db_individualTestModel.user" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
         <AssociationConnector Association="db_individualTestModel.FK_comem_lecturer" ManuallyRouted="false" />
         <AssociationConnector Association="db_individualTestModel.FK_comem_programme" ManuallyRouted="false" />
-        <AssociationConnector Association="db_individualTestModel.FK_comment_proposal" ManuallyRouted="false" />
         <AssociationConnector Association="db_individualTestModel.FK_lecturer_user" ManuallyRouted="false" />
         <AssociationConnector Association="db_individualTestModel.FK_student_lecturer" ManuallyRouted="false" />
         <AssociationConnector Association="db_individualTestModel.FK_student_lecturer1" ManuallyRouted="false" />
@@ -24,6 +22,10 @@
         <AssociationConnector Association="db_individualTestModel.FK_student_programme" ManuallyRouted="false" />
         <AssociationConnector Association="db_individualTestModel.FK_proposal_student" ManuallyRouted="false" />
         <AssociationConnector Association="db_individualTestModel.FK_student_user" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="db_individualTestModel.comment" Width="1.5" PointX="12.75" PointY="4.5" />
+        <AssociationConnector Association="db_individualTestModel.FK_comment_lecturer" />
+        <AssociationConnector Association="db_individualTestModel.FK_comment_proposal" />
+        <AssociationConnector Association="db_individualTestModel.FK_comment_student" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

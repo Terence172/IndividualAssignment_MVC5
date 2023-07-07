@@ -20,8 +20,7 @@
           <Property Name="cmt_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="lect_id" Type="int" />
           <Property Name="stud_id" Type="int" />
-          <Property Name="cmt_title" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="cmt_content" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="cmt_content" Type="varchar" MaxLength="300" Nullable="false" />
           <Property Name="prop_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="lecturer">
@@ -115,6 +114,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_comment_lecturer">
+          <End Role="lecturer" Type="Self.lecturer" Multiplicity="0..1" />
+          <End Role="comment" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecturer">
+              <PropertyRef Name="lect_id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="lect_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_comment_proposal">
           <End Role="proposal" Type="Self.proposal" Multiplicity="1" />
           <End Role="comment" Type="Self.comment" Multiplicity="*" />
@@ -124,6 +135,18 @@
             </Principal>
             <Dependent Role="comment">
               <PropertyRef Name="prop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comment_student">
+          <End Role="student" Type="Self.student" Multiplicity="0..1" />
+          <End Role="comment" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="stu_id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="stud_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -240,8 +263,16 @@
             <End Role="programme" EntitySet="programme" />
             <End Role="comem" EntitySet="comem" />
           </AssociationSet>
+          <AssociationSet Name="FK_comment_lecturer" Association="Self.FK_comment_lecturer">
+            <End Role="lecturer" EntitySet="lecturer" />
+            <End Role="comment" EntitySet="comment" />
+          </AssociationSet>
           <AssociationSet Name="FK_comment_proposal" Association="Self.FK_comment_proposal">
             <End Role="proposal" EntitySet="proposal" />
+            <End Role="comment" EntitySet="comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comment_student" Association="Self.FK_comment_student">
+            <End Role="student" EntitySet="student" />
             <End Role="comment" EntitySet="comment" />
           </AssociationSet>
           <AssociationSet Name="FK_lecturer_user" Association="Self.FK_lecturer_user">
@@ -291,18 +322,6 @@
           <NavigationProperty Name="lecturer" Relationship="Self.FK_comem_lecturer" FromRole="comem" ToRole="lecturer" />
           <NavigationProperty Name="programme" Relationship="Self.FK_comem_programme" FromRole="comem" ToRole="programme" />
         </EntityType>
-        <EntityType Name="comment">
-          <Key>
-            <PropertyRef Name="cmt_id" />
-          </Key>
-          <Property Name="cmt_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="lect_id" Type="Int32" />
-          <Property Name="stud_id" Type="Int32" />
-          <Property Name="cmt_title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="cmt_content" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="prop_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="proposal" Relationship="Self.FK_comment_proposal" FromRole="comment" ToRole="proposal" />
-        </EntityType>
         <EntityType Name="lecturer">
           <Key>
             <PropertyRef Name="lect_id" />
@@ -317,6 +336,7 @@
           <NavigationProperty Name="students1" Relationship="Self.FK_student_lecturer1" FromRole="lecturer" ToRole="student" />
           <NavigationProperty Name="students2" Relationship="Self.FK_student_lecturer2" FromRole="lecturer" ToRole="student" />
           <NavigationProperty Name="students3" Relationship="Self.FK_student_lecturer3" FromRole="lecturer" ToRole="student" />
+          <NavigationProperty Name="comments" Relationship="db_individualTestModel.FK_comment_lecturer" FromRole="lecturer" ToRole="comment" />
         </EntityType>
         <EntityType Name="programme">
           <Key>
@@ -338,8 +358,8 @@
           <Property Name="prop_file" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="prop_status" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="stu_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="comments" Relationship="Self.FK_comment_proposal" FromRole="proposal" ToRole="comment" />
           <NavigationProperty Name="student" Relationship="Self.FK_proposal_student" FromRole="proposal" ToRole="student" />
+          <NavigationProperty Name="comments" Relationship="db_individualTestModel.FK_comment_proposal" FromRole="proposal" ToRole="comment" />
         </EntityType>
         <EntityType Name="student">
           <Key>
@@ -363,6 +383,7 @@
           <NavigationProperty Name="programme" Relationship="Self.FK_student_programme" FromRole="student" ToRole="programme" />
           <NavigationProperty Name="proposals" Relationship="Self.FK_proposal_student" FromRole="student" ToRole="proposal" />
           <NavigationProperty Name="user" Relationship="Self.FK_student_user" FromRole="student" ToRole="user" />
+          <NavigationProperty Name="comments" Relationship="db_individualTestModel.FK_comment_student" FromRole="student" ToRole="comment" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -410,18 +431,6 @@
             </Principal>
             <Dependent Role="comem">
               <PropertyRef Name="prog_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_comment_proposal">
-          <End Role="proposal" Type="Self.proposal" Multiplicity="1" />
-          <End Role="comment" Type="Self.comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="proposal">
-              <PropertyRef Name="prop_id" />
-            </Principal>
-            <Dependent Role="comment">
-              <PropertyRef Name="prop_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -523,7 +532,6 @@
         </Association>
         <EntityContainer Name="db_individualTestEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="comems" EntityType="Self.comem" />
-          <EntitySet Name="comments" EntityType="Self.comment" />
           <EntitySet Name="lecturers" EntityType="Self.lecturer" />
           <EntitySet Name="programmes" EntityType="Self.programme" />
           <EntitySet Name="proposals" EntityType="Self.proposal" />
@@ -537,10 +545,6 @@
           <AssociationSet Name="FK_comem_programme" Association="Self.FK_comem_programme">
             <End Role="programme" EntitySet="programmes" />
             <End Role="comem" EntitySet="comems" />
-          </AssociationSet>
-          <AssociationSet Name="FK_comment_proposal" Association="Self.FK_comment_proposal">
-            <End Role="proposal" EntitySet="proposals" />
-            <End Role="comment" EntitySet="comments" />
           </AssociationSet>
           <AssociationSet Name="FK_lecturer_user" Association="Self.FK_lecturer_user">
             <End Role="user" EntitySet="users" />
@@ -574,7 +578,69 @@
             <End Role="user" EntitySet="users" />
             <End Role="student" EntitySet="students" />
           </AssociationSet>
+          <EntitySet Name="comments" EntityType="db_individualTestModel.comment" />
+          <AssociationSet Name="FK_comment_lecturer" Association="db_individualTestModel.FK_comment_lecturer">
+            <End Role="lecturer" EntitySet="lecturers" />
+            <End Role="comment" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comment_proposal" Association="db_individualTestModel.FK_comment_proposal">
+            <End Role="proposal" EntitySet="proposals" />
+            <End Role="comment" EntitySet="comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comment_student" Association="db_individualTestModel.FK_comment_student">
+            <End Role="student" EntitySet="students" />
+            <End Role="comment" EntitySet="comments" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="comment">
+          <Key>
+            <PropertyRef Name="cmt_id" />
+          </Key>
+          <Property Name="cmt_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="lect_id" Type="Int32" />
+          <Property Name="stud_id" Type="Int32" />
+          <Property Name="cmt_content" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="prop_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="lecturer" Relationship="db_individualTestModel.FK_comment_lecturer" FromRole="comment" ToRole="lecturer" />
+          <NavigationProperty Name="proposal" Relationship="db_individualTestModel.FK_comment_proposal" FromRole="comment" ToRole="proposal" />
+          <NavigationProperty Name="student" Relationship="db_individualTestModel.FK_comment_student" FromRole="comment" ToRole="student" />
+        </EntityType>
+        <Association Name="FK_comment_lecturer">
+          <End Type="db_individualTestModel.lecturer" Role="lecturer" Multiplicity="0..1" />
+          <End Type="db_individualTestModel.comment" Role="comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lecturer">
+              <PropertyRef Name="lect_id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="lect_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comment_proposal">
+          <End Type="db_individualTestModel.proposal" Role="proposal" Multiplicity="1" />
+          <End Type="db_individualTestModel.comment" Role="comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="proposal">
+              <PropertyRef Name="prop_id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="prop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comment_student">
+          <End Type="db_individualTestModel.student" Role="student" Multiplicity="0..1" />
+          <End Type="db_individualTestModel.comment" Role="comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="stu_id" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="stud_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -587,18 +653,6 @@
                 <ScalarProperty Name="comem_id" ColumnName="comem_id" />
                 <ScalarProperty Name="prog_id" ColumnName="prog_id" />
                 <ScalarProperty Name="lect_id" ColumnName="lect_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="comments">
-            <EntityTypeMapping TypeName="db_individualTestModel.comment">
-              <MappingFragment StoreEntitySet="comment">
-                <ScalarProperty Name="cmt_id" ColumnName="cmt_id" />
-                <ScalarProperty Name="lect_id" ColumnName="lect_id" />
-                <ScalarProperty Name="stud_id" ColumnName="stud_id" />
-                <ScalarProperty Name="cmt_title" ColumnName="cmt_title" />
-                <ScalarProperty Name="cmt_content" ColumnName="cmt_content" />
-                <ScalarProperty Name="prop_id" ColumnName="prop_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -672,6 +726,17 @@
                 <ScalarProperty Name="user_password" ColumnName="user_password" />
                 <ScalarProperty Name="user_type" ColumnName="user_type" />
                 <ScalarProperty Name="u_forgotpwdCode" ColumnName="u_forgotpwdCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="comments">
+            <EntityTypeMapping TypeName="db_individualTestModel.comment">
+              <MappingFragment StoreEntitySet="comment">
+                <ScalarProperty Name="prop_id" ColumnName="prop_id" />
+                <ScalarProperty Name="cmt_content" ColumnName="cmt_content" />
+                <ScalarProperty Name="stud_id" ColumnName="stud_id" />
+                <ScalarProperty Name="lect_id" ColumnName="lect_id" />
+                <ScalarProperty Name="cmt_id" ColumnName="cmt_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

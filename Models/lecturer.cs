@@ -22,6 +22,7 @@ namespace IndividualAssignment_MVC5.Models
             this.students1 = new HashSet<student>();
             this.students2 = new HashSet<student>();
             this.students3 = new HashSet<student>();
+            this.comments = new HashSet<comment>();
         }
     
         public int lect_id { get; set; }
@@ -40,5 +41,7 @@ namespace IndividualAssignment_MVC5.Models
         public virtual ICollection<student> students2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<student> students3 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<comment> comments { get; set; }
     }
 }

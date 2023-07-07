@@ -228,11 +228,14 @@
 
             @section scripts {
                 <script>
-
                     document.getElementById("showPdfButton").addEventListener("click", function () {
-                        document.getElementById("pdfContainer").style.display = "table-row";
+                        var pdfContainer = document.getElementById("pdfContainer");
+                        if (pdfContainer.style.display === "none") {
+                            pdfContainer.style.display = "table-row";
+                        } else {
+                            pdfContainer.style.display = "none";
+                        }
                     });
-
                 </script>
 
             }

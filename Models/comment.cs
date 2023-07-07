@@ -17,10 +17,11 @@ namespace IndividualAssignment_MVC5.Models
         public int cmt_id { get; set; }
         public Nullable<int> lect_id { get; set; }
         public Nullable<int> stud_id { get; set; }
-        public string cmt_title { get; set; }
         public string cmt_content { get; set; }
         public int prop_id { get; set; }
     
+        public virtual lecturer lecturer { get; set; }
         public virtual proposal proposal { get; set; }
+        public virtual student student { get; set; }
     }
 }

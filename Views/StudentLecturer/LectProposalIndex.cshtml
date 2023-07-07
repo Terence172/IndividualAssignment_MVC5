@@ -1,0 +1,246 @@
+﻿@model IndividualAssignment_MVC5.Models.lecturer
+
+@{
+    ViewBag.Title = "LectProposalIndex";
+    Layout = "~/Views/Home/LayoutDashboard.cshtml";
+}
+
+<div class="page-header">
+    <div class="row">
+
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Proposals - List</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("DashboardLecturer", "Home")">Home</a></li>
+                    <li class="breadcrumb-item">Manage your Proposals</li>
+                    <li class="breadcrumb-item active" aria-current="page">Proposals List</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+<div class="pd-20 card-box mb-30">
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h4 class="text-blue h4">Supervised Proposals</h4>
+            <p>Proposals your <b>Supervised</b> Students sent through the <code>.system</code> :P</p>
+        </div>
+    </div>
+    <div class="pb-20">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="table-plus datatable-nosort">Student Username</th>
+                    <th>Student Name</th>
+                    <th>Student Academic Programme</th>
+                    <th>Proposal Status</th>
+                    <th>Proposal Type</th>
+                    <th class="datatable-nosort">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <!--students3 is pref students 2 is not pref-->
+
+                @foreach (var item in Model.students2)
+                {
+
+                    <tr>
+                        <td class="table-plus">
+                            <span>@Html.DisplayFor(modelItem => item.user.user_name)</span>
+                        </td>
+
+                        <td>@Html.DisplayFor(modelItem => item.user.user_firstname) @Html.DisplayFor(modelItem => item.user.user_lastname)</td>
+                        <td>@Html.DisplayFor(modelItem => item.programme.prog_name)</td>
+
+
+
+                        @if (item.proposals.Any())
+                        {
+                            if (item.proposals.First().prop_status == "Submitted")
+                            {
+                                <td><span class="badge badge-primary">Submitted</span></td>
+                            }
+                            else if (item.proposals.First().prop_status == "Accepted")
+                            {
+                                <td><span class="badge badge-success">Accepted</span></td>
+                            }
+                            else if (item.proposals.First().prop_status == "AcceptedWConditions")
+                            {
+                                <td><span class="badge badge-info">Accepted with Conditions</span></td>
+                            }
+                            else if (item.proposals.First().prop_status == "Rejected")
+                            {
+                                <td><span class="badge badge-danger">Rejected from Evaluator</span></td>
+                            }
+                            else if (item.proposals.First().prop_status == "Seen")
+                            {
+                                <td><span class="badge badge-secondary">Supervisor Seen &amp; Commented</span></td>
+                            }
+                            else if (item.proposals.First().prop_status == "Resubmitted")
+                            {
+                                <td><span class="badge badge-secondary">Resubmitted</span></td>
+                            }
+                            if (item.proposals.First().prop_type == "Research")
+                            {
+                                <td><span class="badge badge-primary">Research</span></td>
+                            }
+                            else if (item.proposals.First().prop_type == "Development")
+                            {
+                                <td><span class="badge badge-secondary">Development</span></td>
+                            }
+
+                        }
+
+                        else
+                        {
+                            <td><span class="badge badge-warning">Not Submitted</span></td>
+
+                            <td><span class="badge badge-warning">Not Specified</span></td>
+                        }
+
+                        <td>
+                            <div class="dropdown">
+                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                    <i class="dw dw-more"></i>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                    <a class="dropdown-item" href="@Url.Action("DetailsStudent", "StudentLecturer", new { id = item.user_id })">
+                                        <i class="dw dw-eye"></i> View
+                                    </a>
+
+                                    @if (item.stu_sup_agreement != null)
+                                    {
+                                        <a class="dropdown-item" href="@Url.Action("ConsentForm", "StudentLecturer", new { id = item.user_id })">
+                                            <i class="dw dw-upload"></i> Consent Form
+                                        </a>
+                                    }
+
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="pd-20 card-box mb-30">
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h4 class="text-blue h4">Evaluate Proposals</h4>
+            <p>Proposals you are supposed to <b>Evaluate</b> sent through the <code>.system</code> :P</p>
+        </div>
+    </div>
+    <div class="pb-20">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="table-plus datatable-nosort">Student Username</th>
+                    <th>Student Name</th>
+                    <th>Student Academic Programme</th>
+                    <th>Proposal Status</th>
+                    <th>Proposal Type</th>
+                    <th class="datatable-nosort">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+                @foreach (var item in Model.students1.Concat(Model.students))
+                {
+
+                    <tr>
+                        <td class="table-plus">
+                            <span>@Html.DisplayFor(modelItem => item.user.user_name)</span>
+                        </td>
+
+                        <td>@Html.DisplayFor(modelItem => item.user.user_firstname) @Html.DisplayFor(modelItem => item.user.user_lastname)</td>
+                        <td>@Html.DisplayFor(modelItem => item.programme.prog_name)</td>
+
+
+                        @if (item.proposals.Any())
+                        {
+                            if (item.proposals.First().prop_status == "Submitted")
+                            {
+                                <td><span class="badge badge-primary">Submitted</span></td>
+                            }
+                            else if (item.proposals.First().prop_status == "Accepted")
+                            {
+                                <td><span class="badge badge-success">Accepted</span></td>
+                            }
+                            else if (item.proposals.First().prop_status == "AcceptedWConditions")
+                            {
+                                <td><span class="badge badge-info">Accepted with Conditions</span></td>
+                            }
+                            else if (item.proposals.First().prop_status == "Rejected")
+                            {
+                                <td><span class="badge badge-danger">Rejected from Evaluator</span></td>
+                            }
+                            else if (item.proposals.First().prop_status == "Seen")
+                            {
+                                <td><span class="badge badge-secondary">Supervisor Seen &amp; Commented</span></td>
+                            }
+                            else if (item.proposals.First().prop_status == "Resubmitted")
+                            {
+                                <td><span class="badge badge-secondary">Resubmitted</span></td>
+                            }
+
+                            if (item.proposals.First().prop_type == "Research")
+                            {
+                                <td><span class="badge badge-primary">Research</span></td>
+                            }
+                            else if (item.proposals.First().prop_type == "Development")
+                            {
+                                <td><span class="badge badge-secondary">Development</span></td>
+                            }
+
+                        }
+
+                        else
+                        {
+                            <td><span class="badge badge-warning">Not Submitted</span></td>
+
+                            <td><span class="badge badge-warning">Not Specified</span></td>
+                        }
+
+                        <td>
+                            <div class="dropdown">
+                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                    <i class="dw dw-more"></i>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                    <a class="dropdown-item" href="@Url.Action("DetailsStudent", "StudentLecturer", new { id = item.user_id })">
+                                        <i class="dw dw-eye"></i> View
+                                    </a>
+
+                                    @if (item.proposals.Any() && (item.proposals.First().prop_status == "Seen" || item.proposals.First().prop_status == "Accepted" || item.proposals.First().prop_status == "AcceptedWConditions" || item.proposals.First().prop_status == "Rejected"))
+                                    {
+                                        <a class="dropdown-item" href="@Url.Action("ViewProposalLect", "StudentLecturer", new { id = item.stu_id })">
+                                            <i class="dw dw-pen"></i> Evaluate Proposal
+                                        </a>
+                                    }
+
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
