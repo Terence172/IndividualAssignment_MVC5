@@ -706,8 +706,8 @@ section.coming-soon .continer .counter .seconds .value {
 section.coming-soon .continer .counter span {
     font-size: 18px;
     text-transform: uppercase;
-    color: #5C001E;
-    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+    font-weight: 700;
     letter-spacing: 1px;
     margin-top: 0px;
     display: block;

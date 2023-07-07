@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Home Page";
+    var users = ViewBag.Users as List<IndividualAssignment_MVC5.Models.user>;
 }
 
 <!-- ***** Main Banner Area Start ***** -->
@@ -30,10 +31,17 @@
                 <div class="features-post">
                     <div class="features-content">
                         <div class="content-show">
-                            <h4><i class="fa fa-pencil"></i>All Courses</h4>
+                            <h4><i class="fa fa-pencil"></i> QS WORLD UNIVERSITY</h4>
                         </div>
                         <div class="content-hide">
-                            <p>Curabitur id eros vehicula, tincidunt libero eu, lobortis mi. In mollis eros a posuere imperdiet. Donec maximus elementum ex. Cras convallis ex rhoncus, laoreet libero eu, vehicula libero.</p>
+                            <p>
+                                <b>#44</b> - Petroleum Engineering<br />
+                                <b>#74</b> - Engineering & Technology<br />
+                                <b>#80</b> - Engineering & Electronic<br />
+                                <b>#51</b> – #100  Engineering- Civil & Structural<br />
+                                <b>#51</b> – #100  Architecture/Built Environment Engineering<br />
+                                <b>#51</b> – #100  Mineral & Mining
+                            </p>
                             <p class="hidden-sm">Curabitur id eros vehicula, tincidunt libero eu, lobortis mi. In mollis eros a posuere imperdiet.</p>
                             <div class="scroll-to-section"><a href="#section2">More Info.</a></div>
                         </div>
@@ -44,12 +52,16 @@
                 <div class="features-post second-features">
                     <div class="features-content">
                         <div class="content-show">
-                            <h4><i class="fa fa-graduation-cap"></i>Virtual Class</h4>
+                            <h4><i class="fa fa-graduation-cap"></i>Why Study at UTM?</h4>
                         </div>
                         <div class="content-hide">
-                            <p>Curabitur id eros vehicula, tincidunt libero eu, lobortis mi. In mollis eros a posuere imperdiet. Donec maximus elementum ex. Cras convallis ex rhoncus, laoreet libero eu, vehicula libero.</p>
+                            <p>
+                                <b>#39</b> in Asia
+                                <br />
+                                <b>#5</b> in Malaysia
+                            </p>
                             <p class="hidden-sm">Curabitur id eros vehicula, tincidunt libero eu, lobortis mi. In mollis eros a posuere imperdiet.</p>
-                            <div class="scroll-to-section"><a href="#section3">Details</a></div>
+                            <div class="scroll-to-section"><a href="https://www.utm.my/">Official Website</a></div>
                         </div>
                     </div>
                 </div>
@@ -58,12 +70,15 @@
                 <div class="features-post third-features">
                     <div class="features-content">
                         <div class="content-show">
-                            <h4><i class="fa fa-book"></i>Real Meeting</h4>
+                            <h4><i class="fa fa-book"></i>THE Impact Ranking</h4>
                         </div>
                         <div class="content-hide">
-                            <p>Curabitur id eros vehicula, tincidunt libero eu, lobortis mi. In mollis eros a posuere imperdiet. Donec maximus elementum ex. Cras convallis ex rhoncus, laoreet libero eu, vehicula libero.</p>
+                            <p>
+                                <b>#1</b>
+                                in Malaysia for SDG9-Industry, Innovation and Infrastructure
+                            </p>
                             <p class="hidden-sm">Curabitur id eros vehicula, tincidunt libero eu, lobortis mi. In mollis eros a posuere imperdiet.</p>
-                            <div class="scroll-to-section"><a href="#">Read More</a></div>
+                            <div class="scroll-to-section"><a href="#section2">Read More</a></div>
                         </div>
                     </div>
                 </div>
@@ -77,15 +92,15 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="section-heading">
-                    <h2>Why choose Grad School?</h2>
+                    <h2>Programmes at UTM</h2>
                 </div>
             </div>
             <div class="col-md-12">
                 <div id='tabs'>
                     <ul>
-                        <li><a href='#tabs-1'>Best Education</a></li>
-                        <li><a href='#tabs-2'>Top Management</a></li>
-                        <li><a href='#tabs-3'>Quality Meeting</a></li>
+                        <li><a href='#tabs-1'>Degree Programmes</a></li>
+                        <li><a href='#tabs-2'>Postgraduate Programmes</a></li>
+                        <li><a href='#tabs-3'>Other Programmes</a></li>
                     </ul>
                     <section class='tabs-content'>
                         <article id='tabs-1'>
@@ -94,19 +109,19 @@
                                     <img src="~/Content/assets/src/images/choose-us-image-01.png" alt="">
                                 </div>
                                 <div class="col-md-6">
-                                    <h4>Best Education</h4>
-                                    <p>Grad School is free educational HTML template with Bootstrap 4.5.2 CSS layout. Feel free to use it for educational or commercial purposes. You may want to make <a href="https://paypal.me/templatemo" target="_parent" rel="sponsored">a little donation</a> to TemplateMo. Please tell your friends about us. Thank you.</p>
+                                    <h4>Degree Programmes</h4>
+                                    <p>Further information about the structure of our full-time bachelor’s degree programmes.</p>
                                 </div>
                             </div>
                         </article>
                         <article id='tabs-2'>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <img src="~/Content/assets/src/images/choose-us-image-02.png" alt="">
+                                    <img src="~/Content/assets/src/images/choose-us-image-02.png" alt="" style="max-height: 310px; ">
                                 </div>
                                 <div class="col-md-6">
-                                    <h4>Top Level</h4>
-                                    <p>You can modify this HTML layout by editing contents and adding more pages as you needed. Since this template has options to add dropdown menus, you can put many HTML pages.</p>
+                                    <h4>Postgraduate Programmes</h4>
+                                    <p>We offer various research-related postgraduate programmes for those who have passion to go further.</p>
                                     <p>Suspendisse tincidunt, magna ut finibus rutrum, libero dolor euismod odio, nec interdum quam felis non ante.</p>
                                 </div>
                             </div>
@@ -117,8 +132,8 @@
                                     <img src="~/Content/assets/src/images/choose-us-image-03.png" alt="">
                                 </div>
                                 <div class="col-md-6">
-                                    <h4>Quality Meeting</h4>
-                                    <p>You are NOT allowed to redistribute this template ZIP file on any template collection website. However, you can use this template to convert into a specific theme for any kind of CMS platform such as WordPress. For more information, you shall <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">contact TemplateMo</a> now.</p>
+                                    <h4>Diploma, Executive & Part-time Programmes</h4>
+                                    <p>Our UTMSpace offers broad range of diplomas, part-time degree and executive programmes.</p>
                                 </div>
                             </div>
                         </article>
@@ -135,27 +150,27 @@
             <div class="col-md-7 col-xs-12">
                 <div class="continer centerIt">
                     <div>
-                        <h4>Take <em>any online course</em> and win $326 for your next class</h4>
+                        <h4>Login into <em>FYP 1 System</em> and watch our users grow.</h4>
                         <div class="counter">
 
                             <div class="days">
-                                <div class="value">00</div>
-                                <span>Days</span>
+                                <div class="value">@users.Count(u => u.user_type == "Committee")</div>
+                                <span>Committee Members</span>
                             </div>
 
                             <div class="hours">
-                                <div class="value">00</div>
-                                <span>Hours</span>
+                                <div class="value">@users.Count(u => u.user_type == "Lecturer")</div>
+                                <span>Lecturers</span>
                             </div>
 
                             <div class="minutes">
-                                <div class="value">00</div>
-                                <span>Minutes</span>
+                                <div class="value">@users.Count(u => u.user_type == "Admin")</div>
+                                <span>Admins</span>
                             </div>
 
                             <div class="seconds">
-                                <div class="value">00</div>
-                                <span>Seconds</span>
+                                <div class="value">@users.Count(u => u.user_type == "Student")</div>
+                                <span>Students</span>
                             </div>
 
                         </div>

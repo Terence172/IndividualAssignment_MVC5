@@ -13,6 +13,8 @@ namespace IndividualAssignment_MVC5.Controllers
         
         public ActionResult Index()
         {
+            List<user> users = db.users.ToList();
+            ViewBag.Users = users;
             return View();
         }
 
