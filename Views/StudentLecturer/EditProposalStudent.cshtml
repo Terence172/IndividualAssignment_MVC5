@@ -1,0 +1,291 @@
+﻿
+@model IndividualAssignment_MVC5.Models.student
+
+@{
+    ViewBag.Title = "EditProposalStudent";
+    Layout = "~/Views/Home/LayoutDashboard.cshtml";
+}
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Edit Your Proposal Submission</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("DashboardStudent", "Home")">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit Your Proposal</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="pd-20 card-box mb-30">
+
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h4 class="text-blue h4">Your Credentials</h4>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Variable</th>
+                <th scope="col">Content</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <th scope="row">Your Assigned Supervisor</th>
+                <td>@Html.DisplayFor(model => model.lecturer2.user.user_firstname) @Html.DisplayFor(model => model.lecturer2.user.user_lastname) (@Html.DisplayFor(model => model.lecturer2.user.user_name))</td>
+            </tr>
+
+            <tr>
+                <th scope="row">Your Proposal Status</th>
+                @if (Model.proposals.Any())
+                {
+
+                    if (Model.proposals.First().prop_status == "Submitted")
+                    {
+                        <td><span class="badge badge-primary">Submitted</span></td>
+                    }
+                    if (Model.proposals.First().prop_status == "Accepted")
+                    {
+                        <td><span class="badge badge-success">Accepted</span></td>
+                    }
+                    if (Model.proposals.First().prop_status == "AcceptedWConditions")
+                    {
+                        <td><span class="badge badge-info">Accepted with Conditions</span></td>
+                    }
+                    if (Model.proposals.First().prop_status == "Rejected")
+                    {
+                        <td><span class="badge badge-danger">Rejected from Evaluator</span></td>
+                    }
+                    if (Model.proposals.First().prop_status == "Seen")
+                    {
+                        <td><span class="badge badge-secondary">Supervisor Seen &amp; Commented</span></td>
+                    }
+                    if (Model.proposals.First().prop_status == "Resubmitted")
+                    {
+                        <td><span class="badge badge-secondary">Resubmitted</span></td>
+                    }
+
+                }
+                else
+                {
+                    <td><span class="badge badge-warning">Not Submitted</span></td>
+                }
+            </tr>
+
+
+            <tr>
+                <th scope="row">Your First Evaluator</th>
+                <td>@Html.DisplayFor(model => model.lecturer1.user.user_firstname) @Html.DisplayFor(model => model.lecturer1.user.user_lastname) (@Html.DisplayFor(model => model.lecturer1.user.user_name))</td>
+            </tr>
+
+            <tr>
+                <th scope="row">Your Second Evaluator</th>
+                <td>@Html.DisplayFor(model => model.lecturer.user.user_firstname) @Html.DisplayFor(model => model.lecturer.user.user_lastname) (@Html.DisplayFor(model => model.lecturer.user.user_name))</td>
+            </tr>
+
+            @if (Model.proposals.Any())
+            {
+
+                <tr>
+                    <th scope="row">View Submitted Proposal</th>
+                    <td>
+                        <button id="showPdfButton" class="btn">
+                            <span class="badge badge-primary">Click here to View</span>
+                        </button>
+                    </td>
+                </tr>
+
+            }
+
+
+        </tbody>
+    </table>
+
+</div>
+
+
+<div class="pd-20 card-box mb-30">
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h4 class="text-blue h4">Edit your Proposal</h4>
+        </div>
+        <div class="pull-right">
+            <a href="@Url.Content("~/Content/assets/H_2-PSM-1-Project-Proposal-Form-PSM.CI_.03-v1.1-16012019.doc")" class="btn btn-primary btn-sm scroll-click" role="button">
+                <i class="icon-copy fa fa-download"></i> Download Proposal Template
+            </a>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("UploadProposal", "StudentLecturer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.stu_id)
+        @Html.HiddenFor(model => model.proposals.FirstOrDefault().stu_id)
+
+
+        <table class="table">
+            <tbody>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <tr>
+                    <th scope="row">Proposal : Title</th>
+                    <td>
+                        @Html.EditorFor(model => model.proposals.FirstOrDefault().prop_title, new { htmlAttributes = new { @class = "form-control", @placeholder = "Proposal Title Goes Here", @required = "" } })
+                        @Html.ValidationMessageFor(model => model.proposals.FirstOrDefault().prop_title, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">Proposal : Type</th>
+                    <td>
+                        @Html.DropDownListFor(model => model.proposals.FirstOrDefault().prop_type, new SelectList(new[] { "Research", "Development" }), "-- Select Proposal Domain --", new { @class = "form-control", @required = "" })
+                        @Html.ValidationMessageFor(model => model.proposals.FirstOrDefault().prop_type, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">Proposal : File</th>
+                    <td>
+                        <input type="file" name="prop_file" accept=".pdf" class="form-control-file form-control height-auto" required/>
+                        <small>You have to upload your file again.</small>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <div class="card card-box text-center">
+            <div class="card-body">
+                <h5 class="card-title">Actions :</h5>
+                <p class="card-text">Choose Carefully :P</p>
+
+                <a class="btn btn-info" data-toggle="modal" data-target="#confirmation-modal" role="button">
+                    Submit
+                </a>
+
+                <a class="btn btn-outline-warning" href="@Url.Action("Index", "students")" role="button">
+                    Cancel
+                </a>
+            </div>
+        </div>
+
+        <div class="modal fade" id="confirmation-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center font-18">
+                        <h4 class="padding-top-30 mb-30 weight-500">Are you sure you want to upload this Proposal?</h4>
+                        <h5 class="mb-30 weight-500">The Proposal Will be Sent for Evaluation</h5>
+                        <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto;">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-secondary border-radius-100 btn-block confirmation-btn" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                NO
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-primary border-radius-100 btn-block confirmation-btn">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                                YES
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    }
+</div>
+
+
+<div class="pd-20 card-box mb-30">
+
+    <div class="clearfix mb-20">
+        <div class="pull-left">
+            <h4 class="text-blue h4">Comments on your Work</h4>
+        </div>
+        <div class="pull-right">
+            <a href="#" class="btn btn-primary btn-sm scroll-click" role="button" onclick="refreshPage()">
+                <i class="icon-copy fa fa-refresh"></i> Refresh
+            </a>
+        </div>
+    </div>
+
+    <div class="chat-box">
+        <div class="chat-desc customscroll">
+            <ul>
+
+                @foreach (var item in Model.proposals.First().comments)
+                {
+                    if (item.stud_id == null)
+                    {
+                        <li class="clearfix admin_chat">
+                            <span class="chat-img">
+                                <img src="~/Content/assets/vendors/images/Incoming.jpg" alt="">
+                            </span>
+                            <div class="chat-body clearfix">
+                                @if (item.lecturer != null)
+                                {
+                                    <div class="chat_time">@item.lecturer.user.user_firstname @item.lecturer.user.user_lastname (@item.lecturer.user.user_name) [@item.lecturer.user.user_type]</div>
+                                }
+                                <p>@item.cmt_content</p>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="clearfix">
+                            <span class="chat-img">
+                                <img src="~/Content/assets/vendors/images/Outgoing.jpg" alt="">
+                            </span>
+                            <div class="chat-body clearfix">
+                                @if (item.student != null)
+                                {
+                                    <div class="chat_time">@item.student.user.user_firstname @item.student.user.user_lastname (@item.student.user.user_name) [@item.student.user.user_type]</div>
+                                }
+                                <p>@item.cmt_content</p>
+                            </div>
+                        </li>
+                    }
+                }
+
+            </ul>
+        </div>
+
+    </div>
+    <div class="chat-footer">
+        @using (Html.BeginForm("SaveComment", "StudentLecturer", FormMethod.Post))
+        {
+
+            @Html.HiddenFor(model => model.proposals.First().prop_id)
+
+            <div class="chat_text_area">
+                <textarea name="commentText" placeholder="Type your comment here…"></textarea>
+            </div>
+            <div class="chat_send">
+                <button class="btn btn-link" type="submit"><i class="icon-copy ion-paper-airplane"></i></button>
+            </div>
+
+        }
+    </div>
+</div>
+
+@section scripts {
+
+    <script>
+
+        function refreshPage() {
+            location.reload(true);
+        }
+
+    </script>
+
+
+}

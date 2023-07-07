@@ -122,6 +122,13 @@
                                         </a>
                                     }
 
+                                    @if (item.proposals.Any())
+                                    {
+                                        <a class="dropdown-item" href="@Url.Action("ViewProposalLect", "StudentLecturer", new { stu_id  = item.stu_id })">
+                                            <i class="dw dw-pen"></i> Evaluate Proposal
+                                        </a>
+                                    }
+
                                 </div>
 
                             </div>
@@ -227,7 +234,7 @@
 
                                     @if (item.proposals.Any() && (item.proposals.First().prop_status == "Seen" || item.proposals.First().prop_status == "Accepted" || item.proposals.First().prop_status == "AcceptedWConditions" || item.proposals.First().prop_status == "Rejected"))
                                     {
-                                        <a class="dropdown-item" href="@Url.Action("ViewProposalLect", "StudentLecturer", new { id = item.stu_id })">
+                                        <a class="dropdown-item" href="@Url.Action("ViewProposalLect", "StudentLecturer", new { stu_id = item.stu_id })">
                                             <i class="dw dw-pen"></i> Evaluate Proposal
                                         </a>
                                     }

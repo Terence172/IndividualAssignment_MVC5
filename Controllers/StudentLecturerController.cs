@@ -80,6 +80,31 @@ namespace IndividualAssignment_MVC5.Controllers
             return File(fileBytes, "application/pdf");
         }
 
+
+
+        public ActionResult GetPdfProposalLect1(int? stu_id)
+        {
+            if (stu_id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            student user = db.students.Find(stu_id);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Retrieve the existing student record based on the user_id
+            student existingStudent = db.students.SingleOrDefault(i => i.stu_id == user.stu_id);
+
+            string pdfFilePath = Server.MapPath("~/Content/assets/uploads/" + existingStudent.proposals.First().prop_file);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(pdfFilePath);
+            return File(fileBytes, "application/pdf");
+        }
+
+
         public ActionResult GetPdfProposal()
         {
             int id = int.Parse(Session["UserID"].ToString());
@@ -107,7 +132,7 @@ namespace IndividualAssignment_MVC5.Controllers
 
 
 
-        public ActionResult GetPdfFormLecturer(int? id)
+        public ActionResult GetPdfProposalLect(int? id)
         {
 
             if (id == null)
@@ -251,6 +276,26 @@ namespace IndividualAssignment_MVC5.Controllers
             return View(student);
         }*/
 
+        public ActionResult EditProposalStudent(int? stu_id)
+        {
+            if (stu_id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            student student = db.students.SingleOrDefault(u => u.stu_id == stu_id);
+
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.prog_id = new SelectList(db.programmes, "prog_id", "prog_name");
+
+            return View(student);
+        }
+
+
 
 
         // POST: StudentLecturer/UploadProposal
@@ -346,8 +391,49 @@ namespace IndividualAssignment_MVC5.Controllers
             db.SaveChanges();
 
             // Redirect to the appropriate view or action
-            return RedirectToAction("ProposalStudent", "StudentLecturer");
+            if (Session["UserType"].ToString() == "Student")
+            {
+                return RedirectToAction("ViewProposalLect", "StudentLecturer");
+            }
+            else
+            {
+                proposal existingProposal = db.proposals.SingleOrDefault(p => p.prop_id == prop_id);
+                
+                return RedirectToAction("ViewProposalLect", "StudentLecturer", new { stu_id = existingProposal.stu_id });
+
+            }
         }
+
+
+
+        [HttpPost]
+        public ActionResult SaveStatus(string prop_status, int prop_id)
+        {
+            // Retrieve the existing proposal record based on the student's ID
+            proposal existingProposal = db.proposals.SingleOrDefault(p => p.prop_id == prop_id);
+
+            // Create a new proposal or update the existing proposal
+            if (existingProposal != null)
+            {
+                if (prop_status == "Accepted With Conditions")
+                {
+                    existingProposal.prop_status = "AcceptedWConditions";
+                }
+                else
+                {
+                    existingProposal.prop_status = prop_status;
+                }
+
+                // Set the modified status field only
+                db.Entry(existingProposal).Property(p => p.prop_status).IsModified = true;
+                db.SaveChanges();
+            }
+
+            
+
+            return RedirectToAction("ViewProposalLect", "StudentLecturer", new { stu_id = existingProposal.stu_id });
+        }
+
 
 
 

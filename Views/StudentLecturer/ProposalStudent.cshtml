@@ -30,7 +30,7 @@
 
     <div class="clearfix mb-20">
         <div class="pull-left">
-            <h4 class="text-blue h4">Student Credentials</h4>
+            <h4 class="text-blue h4">Your Credentials</h4>
         </div>
     </div>
     <table class="table">
@@ -119,9 +119,153 @@
 @if (Model.proposals != null && Model.proposals.Any())
 {
 
+    if (Model.proposals.First().prop_status == "Submitted")
+    {
+        <!--What Happens if Submitted-->
+        <div class="card-box pd-20 height-100-p mb-30">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <img src="~/Content/assets/vendors/images/banner-img.png" alt="">
+                </div>
+                <div class="col-md-8">
+                    <h4 class="font-20 weight-500 mb-10 text-capitalize">
+                        Great Job! <div class="weight-600 font-30 text-blue">@Model.user.user_firstname @Model.user.user_lastname</div>
+                    </h4>
+                    <p class="font-18 max-width-600">What happens now? Lets wait for your supervisor to see and express their feelings on your proposal. :P</p>
+                </div>
+            </div>
+        </div>
 
+    }
+    else if (Model.proposals.First().prop_status == "Accepted")
+    {
+        <!--What Happens if Accepted-->
+
+        <div class="card-box pd-20 height-100-p mb-30">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <img src="~/Content/assets/vendors/images/banner-img.png" alt="">
+                </div>
+
+                <div class="col-md-8">
+                    <h4 class="font-20 weight-500 mb-10 text-capitalize">
+                        Congratulations! <div class="weight-600 font-30 text-blue">@Model.user.user_firstname @Model.user.user_lastname</div>
+                    </h4>
+                    <p class="font-18 max-width-600">Now you can rest.</p>
+                </div>
+            </div>
+        </div>
+
+    }
+    else if (Model.proposals.First().prop_status == "AcceptedWConditions")
+    {
+        <!--What Happens if AcceptedWConditions-->
+
+        <div class="card-box pd-20 height-100-p mb-30">
+
+            <div class="pull-right">
+                <a href="@Url.Action("EditProposalStudent", "StudentLecturer", new { stu_id = Model.stu_id })" class="btn btn-warning btn-sm scroll-click" role="button">
+                    <i class="icon-copy fa fa-edit"></i> Edit your Proposal
+                </a>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <img src="~/Content/assets/vendors/images/banner-img.png" alt="">
+                </div>
+
+                <div class="col-md-8">
+                    <h4 class="font-20 weight-500 mb-10 text-capitalize">
+                        Great Job! <div class="weight-600 font-30 text-blue">@Model.user.user_firstname @Model.user.user_lastname</div>
+                    </h4>
+                    <p class="font-18 max-width-600">One of your evaluators determined that your proposal is acceptable. Granted you make some changes, please click the button on the top right to make those changes.</p>
+                </div>
+            </div>
+        </div>
+
+    }
+    else if (Model.proposals.First().prop_status == "Rejected")
+    {
+        <!--What Happens if Rejected-->
+
+        <div class="card-box pd-20 height-100-p mb-30">
+
+            <div class="pull-right">
+                <a href="@Url.Action("EditProposalStudent", "StudentLecturer", new { stu_id = Model.stu_id })" class="btn btn-warning btn-sm scroll-click" role="button">
+                    <i class="icon-copy fa fa-edit"></i> Edit your Proposal
+                </a>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <img src="~/Content/assets/vendors/images/banner-img.png" alt="">
+                </div>
+
+                <div class="col-md-8">
+                    <h4 class="font-20 weight-500 mb-10 text-capitalize">
+                        Whoops! <div class="weight-600 font-30 text-blue">@Model.user.user_firstname @Model.user.user_lastname</div>
+                    </h4>
+                    <p class="font-18 max-width-600">One of your evaluators determined that your proposal is unacceptable. But dont worry, please click the button on the top right to resubmit your proposal.</p>
+                </div>
+            </div>
+        </div>
+
+    }
+    else if (Model.proposals.First().prop_status == "Seen")
+    {
+        <!--What Happens if Seen-->
+
+        <div class="card-box pd-20 height-100-p mb-30">
+
+            <div class="pull-right">
+                <a href="@Url.Action("EditProposalStudent", "StudentLecturer", new { stu_id = Model.stu_id })" class="btn btn-warning btn-sm scroll-click" role="button">
+                    <i class="icon-copy fa fa-edit"></i> Edit your Proposal
+                </a>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <img src="~/Content/assets/vendors/images/banner-img.png" alt="">
+                </div>
+
+                <div class="col-md-8">
+                    <h4 class="font-20 weight-500 mb-10 text-capitalize">
+                        Great Job! <div class="weight-600 font-30 text-blue">@Model.user.user_firstname @Model.user.user_lastname</div>
+                    </h4>
+                    <p class="font-18 max-width-600">What happens now? Your supervisor has seen and commented on your proposal, if needed you can edit your proposal. By Clicking the button on the top right. This will make it so that your supervisor rechecks your submisson.</p>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+    }
+    else if (Model.proposals.First().prop_status == "Resubmitted")
+    {
+        <!--What Happens if Resubmitted-->
+
+        <div class="card-box pd-20 height-100-p mb-30">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <img src="~/Content/assets/vendors/images/banner-img.png" alt="">
+                </div>
+                <div class="col-md-8">
+                    <h4 class="font-20 weight-500 mb-10 text-capitalize">
+                        Great Job! <div class="weight-600 font-30 text-blue">@Model.user.user_firstname @Model.user.user_lastname</div>
+                    </h4>
+                    <p class="font-18 max-width-600">What happens now? Lets wait for your supervisor to see and express their feelings on your proposal on your resubmitted proposal. :P</p>
+                </div>
+            </div>
+        </div>
+    }
 
 }
+
+
+
 else
 {
     <div class="pd-20 card-box mb-30">
@@ -166,7 +310,7 @@ else
                     <tr>
                         <th scope="row">Proposal : File</th>
                         <td>
-                            <input type="file" name="prop_file" accept=".pdf" class="form-control-file form-control height-auto" />
+                            <input type="file" name="prop_file" accept=".pdf" class="form-control-file form-control height-auto" required />
                         </td>
                     </tr>
                 </tbody>

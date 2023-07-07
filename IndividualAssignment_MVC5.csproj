@@ -909,6 +909,7 @@
     <Content Include="Views\StudentLecturer\ProposalStudent.cshtml" />
     <Content Include="Views\StudentLecturer\ViewProposalLect.cshtml" />
     <Content Include="Views\StudentLecturer\LectProposalIndex.cshtml" />
+    <Content Include="Views\StudentLecturer\EditProposalStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

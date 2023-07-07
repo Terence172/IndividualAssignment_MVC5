@@ -252,14 +252,14 @@ namespace IndividualAssignment_MVC5.Controllers
             var verifyUrl = "/Login/" + emailFor + "/" + activationCode;
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
 
-            var fromEmail = new MailAddress("akmalrentalsalphazero@gmail.com", "Akmal Rentals");
+            var fromEmail = new MailAddress("terenceloorthanathan17@gmail.com", "FYP1 System");
             var toEmail = new MailAddress(emailID);
-            var fromEmailPassword = "otubezrpgcnrvxnl"; // Replace with actual password
+            var fromEmailPassword = "rzmvuyyascgfmzle"; // Replace with actual password
 
             string subject = "";
             string body = "";
 
-            string logoImageUrl = "https://i.imgur.com/j3xnJzi.png";
+            string logoImageUrl = "https://i.imgur.com/0oUkVR9.png";
             string backgroundImageUrl = "https://i.imgur.com/4Q9bX9h.png";
 
             if (emailFor == "ResetPassword")
@@ -400,7 +400,7 @@ namespace IndividualAssignment_MVC5.Controllers
                                                                                     <tr>
                                                                                         <td style='padding: 20px;'>
                                                                                             <p style='margin-bottom: 0;'>Regards,</p>
-                                                                                            <p style='margin-top: 0;'>Akmal Rentals</p>
+                                                                                            <p style='margin-top: 0;'>FYP1 System</p>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
