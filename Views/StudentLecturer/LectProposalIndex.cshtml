@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="pb-20">
-        <table class="table">
+        <table class="data-table table stripe hover nowrap">
             <thead>
                 <tr>
                     <th class="table-plus datatable-nosort">Student Username</th>
@@ -125,7 +125,7 @@
                                     @if (item.proposals.Any())
                                     {
                                         <a class="dropdown-item" href="@Url.Action("ViewProposalLect", "StudentLecturer", new { stu_id  = item.stu_id })">
-                                            <i class="dw dw-pen"></i> Evaluate Proposal
+                                            <i class="dw dw-magnifying-glass"></i> View Proposal
                                         </a>
                                     }
 
@@ -150,7 +150,7 @@
         </div>
     </div>
     <div class="pb-20">
-        <table class="table">
+        <table class="data-table table stripe hover nowrap">
             <thead>
                 <tr>
                     <th class="table-plus datatable-nosort">Student Username</th>

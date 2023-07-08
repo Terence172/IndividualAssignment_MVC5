@@ -79,8 +79,7 @@ namespace IndividualAssignment_MVC5.Controllers
             byte[] fileBytes = System.IO.File.ReadAllBytes(pdfFilePath);
             return File(fileBytes, "application/pdf");
         }
-
-
+        
 
         public ActionResult GetPdfProposalLect1(int? stu_id)
         {
@@ -132,7 +131,7 @@ namespace IndividualAssignment_MVC5.Controllers
 
 
 
-        public ActionResult GetPdfProposalLect(int? id)
+        public ActionResult GetPdfFormLecturer(int? id)
         {
 
             if (id == null)
